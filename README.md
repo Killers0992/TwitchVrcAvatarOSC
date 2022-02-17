@@ -18,6 +18,8 @@ Config values:
 
 - ``SubPlans`` - NotSst, Prime, Tier1, Tier2, Tier3
 
+
+
 ```
 {
   "ActionName": "/avatar/parameters/VRCEmote",
@@ -26,7 +28,10 @@ Config values:
   "Value": 1
 }
 ```
+
 That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
+
+
 
 # Example config
 
