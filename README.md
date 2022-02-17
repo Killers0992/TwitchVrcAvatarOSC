@@ -30,7 +30,7 @@ Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrc
 
 ``[LOG] [TwitchReward] User USERNAME executed reward REWARD_ID but that reward id is not added in config!``
 
-- Possible parameters which can be used in OCS can be found in 
+- Possible parameters for your avatar which can be used in OCS can be found in 
 
 ``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json``
 
