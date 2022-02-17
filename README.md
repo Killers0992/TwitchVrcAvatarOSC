@@ -13,7 +13,7 @@ Currently implemented events:
 
 # Some information
 
-Latest working build of bot: https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5350441899/artifacts/167409828
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5350441899/artifacts/167409828)
 
 You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
