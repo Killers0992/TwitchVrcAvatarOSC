@@ -12,7 +12,7 @@
         {
             if (!string.IsNullOrEmpty(e.ChatMessage.CustomRewardId))
             {
-                if (Config.Instance.Events.OnReward.TryGetValue(e.ChatMessage.CustomRewardId, out TwitchReward rew))
+                if (Config.Instance.Events.OnReward.TryGetValue(e.ChatMessage.CustomRewardId, out TwitchReward? rew))
                 {
                     if (rew.TryExecuteCommand(e.ChatMessage))
                         Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} executed reward {e.ChatMessage.CustomRewardId}");
@@ -35,7 +35,7 @@
 
             string cmdName = e.ChatMessage.Message.Remove(0, 1);
 
-            if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
+            if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand? cmd))
             {
                 if (cmd.TryExecuteCommand(e.ChatMessage))
                     Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} executed command {cmdName}");

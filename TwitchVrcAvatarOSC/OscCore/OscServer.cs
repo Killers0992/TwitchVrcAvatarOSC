@@ -86,7 +86,7 @@ namespace OscCore
         /// <returns></returns>
         public static OscServer GetOrCreate(int port)
         {
-            OscServer server;
+            OscServer? server;
             if (!PortToServer.TryGetValue(port, out server))
             {
                 server = new OscServer(port);
