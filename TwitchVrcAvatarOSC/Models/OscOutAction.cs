@@ -26,7 +26,7 @@ namespace TwitchVrcAvatarOSC.Models
         [JsonIgnore]
         public DateTime ExecutionTime => _assignedTime;
 
-        public object DefaultValue { get; set; } = 0;
-        public object Value { get; set; } = 1;
+        public object? DefaultValue { get; set; }
+        public object? Value { get; set; }
     }
 }
