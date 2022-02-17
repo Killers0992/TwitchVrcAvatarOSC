@@ -42,6 +42,22 @@ namespace TwitchVrcAvatarOSC
                 ActionsQueue.TryAdd(action.ActionName, new Queue<OscOutAction>(new[] {action}));
         }
 
+        private static void SendOcsData(string action, object obj)
+        {
+            if (obj is int integer)
+                _client?.Send(action, integer);
+            else if (obj is long lng)
+                _client?.Send(action, (int)lng);
+            else if (obj is float f)
+                _client?.Send(action, f);
+            else if (obj is Vector2 vec2)
+                _client?.Send(action, vec2);
+            else if (obj is Vector3 vec3)
+                _client?.Send(action, vec3);
+            else if (obj is Color32 color)
+                _client?.Send(action, color);
+        }
+
         public static void TryExecuting()
         {
             foreach(var action in ActionsQueue)
@@ -58,13 +74,8 @@ namespace TwitchVrcAvatarOSC
 
                     if (newAction.Value != null)
                     {
-                        if (newAction.Value is int integer)
-                            _client?.Send(newAction.ActionName, integer);
-                        else if (newAction.Value is long lng)
-                            _client?.Send(newAction.ActionName, (int)lng);
-
+                        SendOcsData(action.Key, newAction.Value);
                         Logger.Log("OscActions", $"On execution start send value {newAction.Value} ({newAction.Value.GetType().FullName}) for action {newAction.ActionName}");
-
                     }
 
                     newAction.AssignedTime = DateTime.Now;
@@ -79,11 +90,7 @@ namespace TwitchVrcAvatarOSC
                 {
                     if (running.Value.DefaultValue != null)
                     {
-                        if (running.Value.DefaultValue is int integer)
-                            _client?.Send(running.Value.ActionName, integer);
-                        else if (running.Value.DefaultValue is long lng)
-                            _client?.Send(running.Value.ActionName, (int)lng);
-
+                        SendOcsData(running.Key, running.Value.DefaultValue);
                         Logger.Log("OscActions", $"On execution end send default value {running.Value.DefaultValue} for action {running.Key}");
                     }
                     Logger.Log("OscActions", $"Execution time for action {running.Key} ended.");
