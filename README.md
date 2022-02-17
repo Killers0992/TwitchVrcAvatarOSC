@@ -20,7 +20,7 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
   "TwitchUsername": "Killers0992",
   "TwitchOAuth": "<token>",
   "ChannelName": "Killers0992",
-  "SlashCommands": {
+  "Commands": {
     "test": {
       "NormalAccess": true,
       "SubAccess": false,
