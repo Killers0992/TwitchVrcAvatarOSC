@@ -11,10 +11,12 @@ namespace TwitchVrcAvatarOSC.Models
         public bool VipAccess { get; set; }
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
+
         [JsonIgnore]
         public DateTime CurrentGlobalDelay = DateTime.Now;
 
         public TimeSpan DelayPerUser { get; set; } = TimeSpan.Zero;
+
         [JsonIgnore]
         public Dictionary<string, DateTime> CurrentUserDelays = new Dictionary<string, DateTime>();
 

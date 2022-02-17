@@ -9,9 +9,7 @@
         public string TwitchOAuth { get; set; } = "twitch-oauth";
         public string ChannelName { get; set; } = "channel-name";
 
-        public Dictionary<string, TwitchCommand> Commands { get; set; } = new Dictionary<string, TwitchCommand>()
-        {
-            { "test", new TwitchCommand() }
-        };
+        public string CommandPrefix { get; set; } = "!";
+        public Dictionary<string, TwitchCommand> Commands { get; set; } = new Dictionary<string, TwitchCommand>();
     }
 }

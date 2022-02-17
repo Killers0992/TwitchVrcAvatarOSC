@@ -15,6 +15,7 @@
                 File.WriteAllText("./config.json", JsonConvert.SerializeObject(new Config(), Formatting.Indented));
 
             JsonConvert.DeserializeObject<Config>(File.ReadAllText("./config.json"));
+            File.WriteAllText("./config.json", JsonConvert.SerializeObject(Config.Instance, Formatting.Indented));
 
             if (Config.Instance == null)
             {

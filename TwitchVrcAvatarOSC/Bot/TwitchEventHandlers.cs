@@ -10,7 +10,7 @@
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
         {
-            if (!e.ChatMessage.Message.StartsWith("!"))
+            if (!e.ChatMessage.Message.StartsWith(Config.Instance.CommandPrefix))
                 return;
 
             string cmdName = e.ChatMessage.Message.Remove(0, 1);
