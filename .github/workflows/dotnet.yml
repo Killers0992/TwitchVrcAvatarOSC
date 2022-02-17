@@ -23,11 +23,12 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Publish
       run: |
-        dotnet publish -c Release -o ../../TwitchBot -r win-x64 --self-contained true /p:UseAppHost=true
+        dotnet publish -c Release -o ../../TwitchBot -r win-x64 --self-contained true /p:UseAppHost=true /p:PublishSingleFile=true
+        cd D:\a
     - name: Tar files
-      run: tar -cvf D:\a\TwitchBot.tar D:\a\TwitchBot
+      run: tar -cvf TwitchBot.tar TwitchBot
     - uses: actions/upload-artifact@v2
       with:
         name: Bot
-        path: D:\a\TwitchBot.tar
+        path: TwitchBot.tar
 
