@@ -56,6 +56,8 @@ namespace TwitchVrcAvatarOSC
                 _client?.Send(action, vec3);
             else if (obj is Color32 color)
                 _client?.Send(action, color);
+            else if (obj is bool b)
+                _client?.Send(action, b);
         }
 
         public static void TryExecuting()
