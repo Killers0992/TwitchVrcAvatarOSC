@@ -20,21 +20,128 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
   "OscServerIP": "127.0.0.1",
   "OscServerPort": 9000,
   "TwitchUsername": "Killers0992",
-  "TwitchOAuth": "<token>",
+  "TwitchOAuth": "<TOKEN",
   "ChannelName": "Killers0992",
   "CommandPrefix": "!",
-  "Commands": {
-    "test": {
-      "NormalAccess": true,
-      "SubAccess": false,
-      "ModAccess": false,
-      "VipAccess": false,
+  "Events": {
+    "OnCommand": {
+      "test": {
+        "NormalAccess": true,
+        "SubAccess": false,
+        "SubMonths": 0,
+        "ModAccess": false,
+        "VipAccess": false,
+        "GlobalDelay": "00:00:00",
+        "DelayPerUser": "00:00:00",
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
+      }
+    },
+    "OnReward": {
+      "<REWARD ID>": {
+        "NormalAccess": true,
+        "SubAccess": false,
+        "SubMonths": 0,
+        "ModAccess": false,
+        "VipAccess": false,
+        "GlobalDelay": "00:00:00",
+        "DelayPerUser": "00:00:00",
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
+      }
+    },
+    "OnReceiveBits": [
+      {
+        "MinBits": 100,
+        "MaxBits": 1000,
+        "NormalAccess": true,
+        "SubAccess": false,
+        "SubMonths": 0,
+        "ModAccess": false,
+        "VipAccess": false,
+        "GlobalDelay": "00:00:00",
+        "DelayPerUser": "00:00:00",
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "OnNewSubscriber": [
+      {
+        "SubPlans": [
+          0
+        ],
+        "GlobalDelay": "00:00:00",
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "OnReSubscriber": [
+      {
+        "MinMonths": 0,
+        "MaxMonths": 365,
+        "SubPlans": [
+          0
+        ],
+        "GlobalDelay": "00:00:00",
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
+      }
+    ],
+    "OnBeingHosted": [
+      {
+        "MinViewers": 0,
+        "MaxViewers": 1000,
+        "GlobalDelay": "00:00:00",
+        "OscOutActions": []
+      }
+    ],
+    "OnUserBanned": {
       "GlobalDelay": "00:00:00",
-      "DelayPerUser": "00:00:00",
       "OscOutActions": [
         {
           "ActionName": "/avatar/parameters/VRCEmote",
-          "ExecutionDuration": 6,
+          "ExecutionDuration": 3,
+          "DefaultValue": 0,
+          "Value": 1
+        }
+      ]
+    },
+    "OnUserTimedout": {
+      "GlobalDelay": "00:00:00",
+      "OscOutActions": [
+        {
+          "ActionName": "/avatar/parameters/VRCEmote",
+          "ExecutionDuration": 3,
           "DefaultValue": 0,
           "Value": 1
         }
