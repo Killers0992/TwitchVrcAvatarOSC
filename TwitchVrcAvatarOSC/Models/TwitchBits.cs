@@ -3,8 +3,11 @@ using TwitchLib.Client.Models;
 
 namespace TwitchVrcAvatarOSC.Models
 {
-    public class TwitchCommand
+    public class TwitchBits
     {
+        public int MinBits { get; set; }
+        public int MaxBits { get; set; }
+
         public bool NormalAccess { get; set; } = true;
         public bool SubAccess { get; set; }
         public int SubMonths { get; set; }
@@ -31,7 +34,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Log($"TwitchBits", $"User {message.DisplayName} sended {message.Bits} bits but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
                     return false;
                 }
             }
@@ -46,7 +49,7 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                     else
                     {
-                        Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
+                        Logger.Log($"TwitchBits", $"User {message.DisplayName} sended {message.Bits} bits but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
                         return false;
                     }
                 }

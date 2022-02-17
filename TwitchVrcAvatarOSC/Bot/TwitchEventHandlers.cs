@@ -10,6 +10,15 @@
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
         {
+            if (e.ChatMessage.Bits > 0)
+            {
+                var bitsEvent = Config.Instance.Events.OnReceiveBits.FirstOrDefault(p => e.ChatMessage.Bits >= p.MinBits && e.ChatMessage.Bits <= p.MaxBits) ?? Config.Instance.Events.OnReceiveBits.OrderByDescending(p => p.MaxBits).FirstOrDefault();
+                if (bitsEvent != null)
+                {
+                    bitsEvent.TryExecuteCommand(e.ChatMessage);
+                }
+            }
+
             if (!e.ChatMessage.Message.StartsWith(Config.Instance.CommandPrefix))
                 return;
 

@@ -14,5 +14,11 @@
 
         public string CommandPrefix { get; set; } = "!";
         public Dictionary<string, TwitchCommand> Commands { get; set; } = new Dictionary<string, TwitchCommand>();
+        public TwitchEvents Events { get; set; } = new TwitchEvents();
+    }
+
+    public class TwitchEvents
+    {
+        public List<TwitchBits> OnReceiveBits { get; set; } = new List<TwitchBits>();
     }
 }
