@@ -24,8 +24,10 @@ jobs:
     - name: Publish
       run: |
         dotnet publish -c Release -o ../../TwitchBot -r win-x64 --self-contained true /p:UseAppHost=true
+    - name: Tar files
+      run: tar -cvf D:\a\TwitchBot.tar D:\a\TwitchBot
     - uses: actions/upload-artifact@v2
       with:
         name: Bot
-        path: D:\a\TwitchBot\TwitchVrcAvatarOSC.exe
+        path: D:\a\TwitchBot.tar
 
