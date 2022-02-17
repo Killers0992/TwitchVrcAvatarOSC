@@ -11,6 +11,9 @@ Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
 - ``NormalAccess`` set to false means only that command can be accessed by having sub/moderator/vip perms.
 
+- ``SubPlans``
+-- 0 -
+
 Example:
 
 VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
