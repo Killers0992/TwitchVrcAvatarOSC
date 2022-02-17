@@ -23,7 +23,7 @@ namespace TwitchVrcAvatarOSC.Models
 
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
-        public bool TryExecuteCommand(ReSubscriber sub)
+        public bool TryExecuteCommand(int months, ReSubscriber sub)
         {
             if (GlobalDelay.TotalSeconds > 0)
             {
@@ -40,6 +40,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchReSub", $"User {sub.DisplayName} resubbed with plan {sub.SubscriptionPlan} for {months} and OSC actions added to queue!");
             return true;
         }
     }

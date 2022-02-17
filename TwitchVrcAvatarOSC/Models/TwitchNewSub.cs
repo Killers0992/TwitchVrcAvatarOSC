@@ -37,6 +37,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchNewSub", $"User {sub.DisplayName} subbed with plan {sub.SubscriptionPlan} and OSC actions added to queue!");
             return true;
         }
     }

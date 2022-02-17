@@ -33,6 +33,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchBan", $"User {username} got banned and OSC actions added to queue!");
             return true;
         }
     }

@@ -37,6 +37,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchHost", $"User {host.HostedByChannel} hosted your channel and OSC actions added to queue!");
             return true;
         }
     }

@@ -71,6 +71,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchBits", $"User {message.DisplayName} sended {message.Bits} and OSC actions added to queue!");
             return true;
         }
     }

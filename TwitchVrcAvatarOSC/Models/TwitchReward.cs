@@ -68,6 +68,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} and OSC actions added to queue!");
             return true;
         }
     }

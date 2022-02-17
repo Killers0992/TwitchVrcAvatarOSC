@@ -33,6 +33,7 @@ namespace TwitchVrcAvatarOSC.Models
             {
                 OscActions.EnqueueAction(action);
             }
+            Logger.Log($"TwitchTimedout", $"User {username} got timedout and OSC actions added to queue!");
             return true;
         }
     }

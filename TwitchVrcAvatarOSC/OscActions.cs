@@ -35,7 +35,7 @@ namespace TwitchVrcAvatarOSC
 
         public static void EnqueueAction(OscOutAction action)
         {
-            Logger.Log("OsrActions", $"Add new action {action.ActionName} to queue.");
+            Logger.Debug("OsrActions", $"Add new action {action.ActionName} to queue.");
             if (ActionsQueue.TryGetValue(action.ActionName, out Queue<OscOutAction>? queue))
                 queue.Enqueue(action);
             else
@@ -77,11 +77,11 @@ namespace TwitchVrcAvatarOSC
                     if (newAction.Value != null)
                     {
                         SendOcsData(action.Key, newAction.Value);
-                        Logger.Log("OscActions", $"On execution start send value {newAction.Value} ({newAction.Value.GetType().FullName}) for action {newAction.ActionName}");
+                        Logger.Debug("OscActions", $"On execution start send value {newAction.Value} ({newAction.Value.GetType().FullName}) for action {newAction.ActionName}");
                     }
 
                     newAction.AssignedTime = DateTime.Now;
-                    Logger.Log("OscActions", $"Execution time for action {action.Key} ends in {(int)(newAction.ExecutionTime - DateTime.Now).TotalSeconds} seconds");
+                    Logger.Debug("OscActions", $"Execution time for action {action.Key} ends in {(int)(newAction.ExecutionTime - DateTime.Now).TotalSeconds} seconds");
                     CurrentlyRunningActions.TryAdd(action.Key, newAction);
                 }
             }
@@ -93,9 +93,9 @@ namespace TwitchVrcAvatarOSC
                     if (running.Value.DefaultValue != null)
                     {
                         SendOcsData(running.Key, running.Value.DefaultValue);
-                        Logger.Log("OscActions", $"On execution end send default value {running.Value.DefaultValue} for action {running.Key}");
+                        Logger.Debug("OscActions", $"On execution end send default value {running.Value.DefaultValue} for action {running.Key}");
                     }
-                    Logger.Log("OscActions", $"Execution time for action {running.Key} ended.");
+                    Logger.Debug("OscActions", $"Execution time for action {running.Key} ended.");
                     CurrentlyRunningActions.TryRemove(running.Key, out _);
                 }
             }

@@ -8,6 +8,8 @@
         public string OscServerIP { get; set; } = "127.0.0.1";
         public int OscServerPort { get; set; } = 9000;
 
+        public bool Debug { get; set; }
+
         public string TwitchUsername { get; set; } = "twitch-username";
         public string TwitchOAuth { get; set; } = "twitch-oauth";
         public string ChannelName { get; set; } = "channel-name";

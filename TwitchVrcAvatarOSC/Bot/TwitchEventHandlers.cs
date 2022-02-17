@@ -6,7 +6,10 @@
 
     public class TwitchEventHandlers
     {
-        public void OnLog(object sender, OnLogArgs e) => Logger.Log("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
+        public void OnLog(object sender, OnLogArgs e)
+        {
+            //Logger.Log("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
+        }
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
         {
@@ -78,15 +81,17 @@
 
         public void OnReSubscriber(object? sender, OnReSubscriberArgs e)
         {
-            var targetSubCommand = Config.Instance.Events.OnReSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan) && e.ReSubscriber.Months >= p.MinMonths && e.ReSubscriber.Months <= p.MaxMonths) ?? Config.Instance.Events.OnReSubscriber.Where(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan)).OrderByDescending(p => p.MaxMonths).FirstOrDefault();
+            if (!int.TryParse(e.ReSubscriber.MsgParamCumulativeMonths, out int months)) return;
+
+            var targetSubCommand = Config.Instance.Events.OnReSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan) && months >= p.MinMonths && months <= p.MaxMonths) ?? Config.Instance.Events.OnReSubscriber.Where(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan)).OrderByDescending(p => p.MaxMonths).FirstOrDefault();
 
             if (targetSubCommand == null)
             {
-                Logger.Log($"TwitchReSub", $"User {e.ReSubscriber.DisplayName} subbed for {e.ReSubscriber.Months} months but sub plan {e.ReSubscriber.SubscriptionPlan} is not configured in config!");
+                Logger.Log($"TwitchReSub", $"User {e.ReSubscriber.DisplayName} subbed for {months} months but sub plan {e.ReSubscriber.SubscriptionPlan} is not configured in config!");
                 return;
             }
 
-            targetSubCommand.TryExecuteCommand(e.ReSubscriber);
+            targetSubCommand.TryExecuteCommand(months, e.ReSubscriber);
         }
 
         public void OnNewSubscriber(object? sender, OnNewSubscriberArgs e)
