@@ -5,14 +5,13 @@ Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
 # Example config
 
-- ``GlobalDelay/DelayPerUser`` is in format ``HOURS:MINUTES:SECONDS``
+- ``GlobalDelay/DelayPerUser`` - Have format ``HOURS:MINUTES:SECONDS``
 
-- ``ExecutionDuration`` is in seconds that means that action will be executed for x amount of seconds and after that default value for that actino will be sended.
+- ``ExecutionDuration`` - Duration is in seconds that means that action will be executed for x amount of seconds and after that default value for that actino will be sended.
 
-- ``NormalAccess`` set to false means only that command can be accessed by having sub/moderator/vip perms.
+- ``NormalAccess`` - Set to false means only that command can be accessed by having sub/moderator/vip perms.
 
-- ``SubPlans``
--- 0 -
+- ``SubPlans`` - NotSst, Prime, Tier1, Tier2, Tier3
 
 Example:
 
@@ -22,9 +21,9 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
 {
   "OscServerIP": "127.0.0.1",
   "OscServerPort": 9000,
-  "TwitchUsername": "Killers0992",
-  "TwitchOAuth": "<TOKEN",
-  "ChannelName": "Killers0992",
+  "TwitchUsername": "twitch-username",
+  "TwitchOAuth": "twitch-oauth",
+  "ChannelName": "channel-name",
   "CommandPrefix": "!",
   "Events": {
     "OnCommand": {
@@ -55,14 +54,7 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
         "VipAccess": false,
         "GlobalDelay": "00:00:00",
         "DelayPerUser": "00:00:00",
-        "OscOutActions": [
-          {
-            "ActionName": "/avatar/parameters/VRCEmote",
-            "ExecutionDuration": 3,
-            "DefaultValue": 0,
-            "Value": 1
-          }
-        ]
+        "OscOutActions": []
       }
     },
     "OnReceiveBits": [
@@ -89,7 +81,7 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
     "OnNewSubscriber": [
       {
         "SubPlans": [
-          0
+          "NotSet"
         ],
         "GlobalDelay": "00:00:00",
         "OscOutActions": [
@@ -107,7 +99,7 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
         "MinMonths": 0,
         "MaxMonths": 365,
         "SubPlans": [
-          0
+          "NotSet"
         ],
         "GlobalDelay": "00:00:00",
         "OscOutActions": [
@@ -125,7 +117,14 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
         "MinViewers": 0,
         "MaxViewers": 1000,
         "GlobalDelay": "00:00:00",
-        "OscOutActions": []
+        "OscOutActions": [
+          {
+            "ActionName": "/avatar/parameters/VRCEmote",
+            "ExecutionDuration": 3,
+            "DefaultValue": 0,
+            "Value": 1
+          }
+        ]
       }
     ],
     "OnUserBanned": {
