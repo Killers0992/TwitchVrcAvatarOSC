@@ -15,7 +15,7 @@
 
             string cmdName = e.ChatMessage.Message.Remove(0, 1);
 
-            if (Config.Instance.SlashCommands.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
+            if (Config.Instance.Commands.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
             {
                 if (cmd.TryExecuteCommand(e.ChatMessage))
                     Console.WriteLine($"User {e.ChatMessage.Username} executed command {cmdName}");
