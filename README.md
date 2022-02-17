@@ -6,6 +6,7 @@ Currently implemented events:
 - OnReSubscribe / OnSubscribe
 - OnBanned / OnTimedout
 - OnUseReward
+- OnReceiveBits
 - OnBeingHosted
 
 
