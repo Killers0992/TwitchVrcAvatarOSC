@@ -17,8 +17,10 @@
 
             if (Config.Instance.SlashCommands.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
             {
-                cmd.TryExecuteCommand();
-                Console.WriteLine($"User {e.ChatMessage.Username} executed command {cmdName}");
+                if (cmd.TryExecuteCommand(e.ChatMessage))
+                    Console.WriteLine($"User {e.ChatMessage.Username} executed command {cmdName}");
+                else
+                    Console.WriteLine($"User {e.ChatMessage.Username} failed to execute command {cmdName}");
             }
         }
     }

@@ -84,7 +84,6 @@ namespace TwitchVrcAvatarOSC
                         else if (running.Value.DefaultValue is long lng)
                             _client?.Send(running.Value.ActionName, (int)lng);
 
-
                         Logger.Log("OscActions", $"On execution end send default value {running.Value.DefaultValue} for action {running.Key}");
                     }
                     Logger.Log("OscActions", $"Execution time for action {running.Key} ended.");

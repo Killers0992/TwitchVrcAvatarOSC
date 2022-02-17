@@ -38,10 +38,7 @@
                 Logger.Error("TwitchBot", ex.Message, ConsoleColor.DarkMagenta);
             }
             Logger.Log($"Core", "Press any key to exit...");
-            while (true)
-            {
-                Console.ReadKey();
-            }
+            Console.ReadKey();
         }
     }
 }
