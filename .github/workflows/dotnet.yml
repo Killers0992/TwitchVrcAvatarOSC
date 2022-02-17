@@ -20,4 +20,11 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet publish -c Release -o ../TwitchBot -r windows-x64 --self-contained true /p:UseAppHost=true
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Bot
+        path: TwitchBot
+
