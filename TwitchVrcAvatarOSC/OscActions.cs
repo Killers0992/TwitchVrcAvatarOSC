@@ -12,7 +12,7 @@ namespace TwitchVrcAvatarOSC
 
         public static ConcurrentDictionary<string, OscOutAction> CurrentlyRunningActions = new ConcurrentDictionary<string, OscOutAction>();
 
-        public OscActions(string connectTo, int port)
+        public OscActions(string connectTo, int port, int delayBetweenExecutions = 50)
         {
             Task.Factory.StartNew(async () =>
             {
@@ -27,7 +27,7 @@ namespace TwitchVrcAvatarOSC
                     {
                         Logger.Error("OsrActions", ex.Message, ConsoleColor.White);
                     }
-                    await Task.Delay(50);
+                    await Task.Delay(delayBetweenExecutions);
                 }
             });
         }

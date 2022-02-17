@@ -9,7 +9,7 @@ namespace TwitchVrcAvatarOSC.Models
 {
     public class OscOutAction
     {
-        public string ActionName { get; set; }
+        public string ActionName { get; set; } = "/avatar/parameters/VRCEmote";
         public int ExecutionDuration { get; set; } = 3;
 
         [JsonIgnore]
@@ -26,7 +26,7 @@ namespace TwitchVrcAvatarOSC.Models
         [JsonIgnore]
         public DateTime ExecutionTime => _assignedTime;
 
-        public object DefaultValue { get; set; }
-        public object Value { get; set; }
+        public object DefaultValue { get; set; } = 0;
+        public object Value { get; set; } = 1;
     }
 }

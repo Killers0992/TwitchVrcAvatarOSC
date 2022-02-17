@@ -13,12 +13,19 @@
         public string ChannelName { get; set; } = "channel-name";
 
         public string CommandPrefix { get; set; } = "!";
-        public Dictionary<string, TwitchCommand> Commands { get; set; } = new Dictionary<string, TwitchCommand>();
         public TwitchEvents Events { get; set; } = new TwitchEvents();
     }
 
     public class TwitchEvents
     {
+        public Dictionary<string, TwitchCommand> OnCommand { get; set; } = new Dictionary<string, TwitchCommand>();
+        public Dictionary<string, TwitchReward> OnReward { get; set; } = new Dictionary<string, TwitchReward>();
         public List<TwitchBits> OnReceiveBits { get; set; } = new List<TwitchBits>();
+        public List<TwitchNewSub> OnNewSubscriber { get; set; } = new List<TwitchNewSub>();
+        public List<TwitchReSub> OnReSubscriber { get; set; } = new List<TwitchReSub>();
+        public List<TwitchHost> OnBeingHosted { get; set; } = new List<TwitchHost>();
+        public TwitchBan OnUserBanned { get; set; }
+        public TwitchTimedout OnUserTimedout { get; set; }
+
     }
 }

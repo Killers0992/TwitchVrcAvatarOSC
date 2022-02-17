@@ -5,8 +5,8 @@ namespace TwitchVrcAvatarOSC.Models
 {
     public class TwitchBits
     {
-        public int MinBits { get; set; }
-        public int MaxBits { get; set; }
+        public int MinBits { get; set; } = 100;
+        public int MaxBits { get; set; } = 1000;
 
         public bool NormalAccess { get; set; } = true;
         public bool SubAccess { get; set; }
@@ -58,10 +58,10 @@ namespace TwitchVrcAvatarOSC.Models
 
             if (!NormalAccess)
             {
+                if (message.SubscribedMonthCount < SubMonths) return false;
                 if (SubAccess)
                 {
                     if (!message.IsSubscriber) return false;
-                    if (message.SubscribedMonthCount < SubMonths) return false;
                 }
                 if (ModAccess && !message.IsModerator) return false;
                 if (VipAccess && !message.IsVip) return false;

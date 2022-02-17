@@ -12,10 +12,23 @@
         static void Main(string[] args)
         {
             if (!File.Exists("./config.json"))
-                File.WriteAllText("./config.json", JsonConvert.SerializeObject(new Config(), Formatting.Indented));
+                File.WriteAllText("./config.json", JsonConvert.SerializeObject(new Config()
+                {
+                    Events = new TwitchEvents()
+                    {
+                        OnCommand = new Dictionary<string, TwitchCommand>() { { "test", new TwitchCommand() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } },
+                        OnBeingHosted = new List<TwitchHost>() { new TwitchHost() { OscOutActions = new List<OscOutAction>() } },
+                        OnNewSubscriber = new List<TwitchNewSub>() { new TwitchNewSub() { OscOutActions = new List<OscOutAction>()} },
+                        OnReceiveBits = new List<TwitchBits>() { new TwitchBits() {  OscOutActions = new List<OscOutAction>()} },
+                        OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} } },
+                        OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>()} } } ,
+                        OnUserBanned = new TwitchBan() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} },
+                        OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } }
+                    }
+                }, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
 
             JsonConvert.DeserializeObject<Config>(File.ReadAllText("./config.json"));
-            File.WriteAllText("./config.json", JsonConvert.SerializeObject(Config.Instance, Formatting.Indented));
+            File.WriteAllText("./config.json", JsonConvert.SerializeObject(Config.Instance, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
 
             if (Config.Instance == null)
             {

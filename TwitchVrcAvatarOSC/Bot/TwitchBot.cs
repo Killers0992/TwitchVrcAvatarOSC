@@ -34,7 +34,13 @@
             eventHandlers = new TwitchEventHandlers();
             client.OnLog += eventHandlers.OnLog;
             client.OnMessageReceived += eventHandlers.OnMessageReceived;
+            client.OnNewSubscriber += eventHandlers.OnNewSubscriber;
+            client.OnReSubscriber += eventHandlers.OnReSubscriber;
+            client.OnBeingHosted += eventHandlers.OnBeingHosted;
+            client.OnUserTimedout += eventHandlers.OnUserTimedout;
+            client.OnUserBanned += eventHandlers.OnUserBanned;
 
             client.Connect();
-        }    }
+        }
+    }
 }

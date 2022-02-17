@@ -3,7 +3,7 @@ using TwitchLib.Client.Models;
 
 namespace TwitchVrcAvatarOSC.Models
 {
-    public class TwitchCommand
+    public class TwitchReward
     {
         public bool NormalAccess { get; set; } = true;
         public bool SubAccess { get; set; }
@@ -31,7 +31,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
                     return false;
                 }
             }
@@ -46,7 +46,7 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                     else
                     {
-                        Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
+                        Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
                         return false;
                     }
                 }
