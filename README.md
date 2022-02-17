@@ -63,8 +63,7 @@ Config values:
 That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
 
 
-
-# Example config
+# Default config
 
 ```
 {
@@ -201,3 +200,28 @@ That in config means VRCEmote expressions menu parameter will have value set to 
   }
 }
 ```
+
+# Empty Config
+
+
+```
+{
+  "OscServerIP": "127.0.0.1",
+  "OscServerPort": 9000,
+  "TwitchUsername": "twitch-username",
+  "TwitchOAuth": "twitch-oauth",
+  "ChannelName": "channel-name",
+  "CommandPrefix": "!",
+  "Events": {
+    "OnCommand": {},
+    "OnReward": {},
+    "OnReceiveBits": [],
+    "OnNewSubscriber": [],
+    "OnReSubscriber": [],
+    "OnBeingHosted": [],
+    "OnUserBanned": {},
+    "OnUserTimedout": {}
+  }
+}
+```
+
