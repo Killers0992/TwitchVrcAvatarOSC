@@ -17,11 +17,11 @@
                     Events = new TwitchEvents()
                     {
                         OnCommand = new Dictionary<string, TwitchCommand>() { { "test", new TwitchCommand() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } },
-                        OnBeingHosted = new List<TwitchHost>() { new TwitchHost() { OscOutActions = new List<OscOutAction>() } },
-                        OnNewSubscriber = new List<TwitchNewSub>() { new TwitchNewSub() { OscOutActions = new List<OscOutAction>()} },
-                        OnReceiveBits = new List<TwitchBits>() { new TwitchBits() {  OscOutActions = new List<OscOutAction>()} },
-                        OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} } },
-                        OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>()} } } ,
+                        OnBeingHosted = new List<TwitchHost>() { new TwitchHost() { OscOutActions = new List<OscOutAction>() {new OscOutAction() } } },
+                        OnNewSubscriber = new List<TwitchNewSub>() { new TwitchNewSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction() }, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
+                        OnReceiveBits = new List<TwitchBits>() { new TwitchBits() {  OscOutActions = new List<OscOutAction>() { new OscOutAction() } } },
+                        OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction()}, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
+                        OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } } ,
                         OnUserBanned = new TwitchBan() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} },
                         OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } }
                     }

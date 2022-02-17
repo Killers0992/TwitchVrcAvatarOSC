@@ -14,7 +14,7 @@ namespace TwitchVrcAvatarOSC.Models
         public int MinMonths { get; set; } = 0;
         public int MaxMonths { get; set; } = 365;
 
-        public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>() { SubscriptionPlan.NotSet };
+        public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>();
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
 

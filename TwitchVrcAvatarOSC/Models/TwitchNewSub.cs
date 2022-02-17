@@ -11,7 +11,7 @@ namespace TwitchVrcAvatarOSC.Models
 {
     public class TwitchNewSub
     {
-        public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>() { SubscriptionPlan.NotSet };
+        public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>();
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
 
