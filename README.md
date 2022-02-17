@@ -1,9 +1,19 @@
 # TwitchVrcAvatarOSC
 Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
+Currently implemented events:
+- Commands
+- OnReSubscribe / OnSubscribe
+- OnBanned / OnTimedout
+- OnUseReward
+- OnBeingHosted
+
+
 ( OSC code from https://github.com/vrchat/OscCore )
 
 # Some information
+
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5350441899/artifacts/167409828)
 
 You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
