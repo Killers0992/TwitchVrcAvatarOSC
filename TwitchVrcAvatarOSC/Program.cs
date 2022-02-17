@@ -23,8 +23,8 @@
                 return;
             }
 
-            Logger.Log("OsrClient", "Connecting to OSR Server...", ConsoleColor.DarkMagenta);
-            Actions = new OscActions("127.0.0.1", 9000);
+            Logger.Log("OsrClient", $"Connecting to OSR Server... ( IP: {Config.Instance.OscServerIP}, Port: {Config.Instance.OscServerPort} )", ConsoleColor.DarkMagenta);
+            Actions = new OscActions(Config.Instance.OscServerIP, Config.Instance.OscServerPort);
             Logger.Log("OsrClient", "Connected to OSR Server!", ConsoleColor.DarkMagenta);
 
             Logger.Log("TwitchBot", "Starting bot...", ConsoleColor.DarkMagenta);
