@@ -24,12 +24,19 @@ Discord: Killers0992#4552
 
 Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5350997444/artifacts/167441767)
 
-You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
+- You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
-If you want easily get REWARD IDS just redeem something via points and in console check for
+- If you want easily get REWARD IDS just redeem something via points and in console check for
 
 ``[LOG] [TwitchReward] User USERNAME executed reward REWARD_ID but that reward id is not added in config!``
 
+- Possible parameters which can be used in OCS can be found in 
+
+``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json``
+
+https://docs.vrchat.com/v2022.1.1/docs/osc-avatar-parameters
+
+https://docs.vrchat.com/v2022.1.1/docs/osc-as-input-controller#supported-inputs
 
 
 Config values:
