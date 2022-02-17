@@ -8,7 +8,8 @@
     {
         public void OnLog(object sender, OnLogArgs e)
         {
-            //Logger.Log("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
+            if (!Config.Instance.Debug) return;
+            Logger.Debug("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
         }
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
