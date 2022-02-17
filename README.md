@@ -3,7 +3,12 @@ Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
 ( OSC code from https://github.com/vrchat/OscCore )
 
-# Example config
+# Some information
+
+You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
+
+
+Config values:
 
 - ``GlobalDelay/DelayPerUser`` - Have format ``HOURS:MINUTES:SECONDS``
 
@@ -13,9 +18,17 @@ Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
 - ``SubPlans`` - NotSst, Prime, Tier1, Tier2, Tier3
 
-Example:
+```
+{
+  "ActionName": "/avatar/parameters/VRCEmote",
+  "ExecutionDuration": 3,
+  "DefaultValue": 0,
+  "Value": 1
+}
+```
+That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
 
-VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
+# Example config
 
 ```
 {
