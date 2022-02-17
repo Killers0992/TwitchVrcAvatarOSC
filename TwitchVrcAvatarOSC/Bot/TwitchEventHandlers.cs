@@ -19,6 +19,10 @@
                     else
                         Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} failed to execute command {e.ChatMessage.CustomRewardId}");
                 }
+                else
+                {
+                    Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} executed reward {e.ChatMessage.CustomRewardId} but that reward id is not added in config!");
+                }
             }
 
             if (e.ChatMessage.Bits > 0)

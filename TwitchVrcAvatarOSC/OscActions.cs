@@ -36,7 +36,7 @@ namespace TwitchVrcAvatarOSC
         public static void EnqueueAction(OscOutAction action)
         {
             Logger.Log("OsrActions", $"Add new action {action.ActionName} to queue.");
-            if (ActionsQueue.TryGetValue(action.ActionName, out Queue<OscOutAction> queue))
+            if (ActionsQueue.TryGetValue(action.ActionName, out Queue<OscOutAction>? queue))
                 queue.Enqueue(action);
             else
                 ActionsQueue.TryAdd(action.ActionName, new Queue<OscOutAction>(new[] {action}));
