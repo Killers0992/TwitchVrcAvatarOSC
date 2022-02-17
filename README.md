@@ -17,9 +17,12 @@ VrcEmote value iss set to 1 for 6 seconds and after that time its set to 0.
 
 ```
 {
+  "OscServerIP": "127.0.0.1",
+  "OscServerPort": 9000,
   "TwitchUsername": "Killers0992",
   "TwitchOAuth": "<token>",
   "ChannelName": "Killers0992",
+  "CommandPrefix": "!",
   "Commands": {
     "test": {
       "NormalAccess": true,
