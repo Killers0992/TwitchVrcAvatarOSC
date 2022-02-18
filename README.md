@@ -49,7 +49,7 @@ Config values:
 
 - ``SubPlans`` - NotSst, Prime, Tier1, Tier2, Tier3
 
-- ``ExecuteRandomActions`` - Can be used only if OscOutActions have more than 1 element.
+- ``ExecuteRandomAction`` - Can be used only if OscOutActions have more than 1 element.
 
 
 
