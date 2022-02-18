@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using TwitchLib.Client.Models;
+using TwitchVrcAvatarOSC.Bot;
 
 namespace TwitchVrcAvatarOSC.Models
 {
@@ -24,6 +25,7 @@ namespace TwitchVrcAvatarOSC.Models
         [JsonIgnore]
         public Dictionary<string, DateTime> CurrentUserDelays = new Dictionary<string, DateTime>();
 
+        public bool ExecuteRandomAction { get; set; }
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
         public bool TryExecuteCommand(ChatMessage message)
@@ -67,10 +69,17 @@ namespace TwitchVrcAvatarOSC.Models
                 if (VipAccess && !message.IsVip) return false;
             }
 
-            foreach (var action in OscOutActions)
+            if (ExecuteRandomAction && OscOutActions.Count > 1)
             {
+                var action = OscOutActions[TwitchBot.rng.Next(0, OscOutActions.Count - 1)];
                 OscActions.EnqueueAction(action);
             }
+            else
+            {
+                foreach (var action in OscOutActions)
+                    OscActions.EnqueueAction(action);
+            }
+
             Logger.Log($"TwitchBits", $"User {message.DisplayName} sended {message.Bits} and OSC actions added to queue!");
             return true;
         }

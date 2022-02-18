@@ -7,11 +7,14 @@
 
     public class TwitchBot
     {
+        public static Random rng;
+
         TwitchClient? client;
         TwitchEventHandlers? eventHandlers;
 
         public TwitchBot(string nickName, string oauthToken, string channelName)
         {
+            rng = new Random();
             ConnectionCredentials credentials = new ConnectionCredentials(nickName, oauthToken);
 
             var clientOptions = new ClientOptions
