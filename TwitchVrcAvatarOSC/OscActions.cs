@@ -48,8 +48,8 @@ namespace TwitchVrcAvatarOSC
                 _client?.Send(action, integer);
             else if (obj is long lng)
                 _client?.Send(action, (int)lng);
-            else if (obj is float f)
-                _client?.Send(action, f);
+            else if (obj is double f)
+                _client?.Send(action, (float)f);
             else if (obj is Vector2 vec2)
                 _client?.Send(action, vec2);
             else if (obj is Vector3 vec3)
