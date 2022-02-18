@@ -22,7 +22,7 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5350997444/artifacts/167441767)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5353346109/artifacts/167566260)
 
 - You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
@@ -63,8 +63,7 @@ Config values:
 That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
 
 
-
-# Example config
+# Default config
 
 ```
 {
@@ -201,3 +200,28 @@ That in config means VRCEmote expressions menu parameter will have value set to 
   }
 }
 ```
+
+# Empty Config
+
+
+```
+{
+  "OscServerIP": "127.0.0.1",
+  "OscServerPort": 9000,
+  "TwitchUsername": "twitch-username",
+  "TwitchOAuth": "twitch-oauth",
+  "ChannelName": "channel-name",
+  "CommandPrefix": "!",
+  "Events": {
+    "OnCommand": {},
+    "OnReward": {},
+    "OnReceiveBits": [],
+    "OnNewSubscriber": [],
+    "OnReSubscriber": [],
+    "OnBeingHosted": [],
+    "OnUserBanned": {},
+    "OnUserTimedout": {}
+  }
+}
+```
+
