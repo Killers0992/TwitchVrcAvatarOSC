@@ -22,7 +22,7 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5353346109/artifacts/167566260)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5353651697/artifacts/167582792)
 
 - You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
@@ -48,6 +48,8 @@ Config values:
 - ``NormalAccess`` - Set to false means only that command can be accessed by having sub/moderator/vip perms.
 
 - ``SubPlans`` - NotSst, Prime, Tier1, Tier2, Tier3
+
+- ``ExecuteRandomActions`` - Can be used only if OscOutActions have more than 1 element.
 
 
 
