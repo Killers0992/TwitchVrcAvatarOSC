@@ -46,9 +46,7 @@
 
             if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand? cmd))
             {
-                if (cmd.TryExecuteCommand(e.ChatMessage))
-                    Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} executed command {cmdName}");
-                else
+                if (!cmd.TryExecuteCommand(e.ChatMessage))
                     Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}");
             }
         }

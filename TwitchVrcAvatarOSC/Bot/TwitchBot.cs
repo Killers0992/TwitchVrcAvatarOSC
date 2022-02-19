@@ -17,7 +17,7 @@
         public TwitchPubSub? tPubSub;
         TwitchEventHandlers? eventHandlers;
 
-        public TwitchBot(string nickName, string oauthToken, string channelName)
+        public TwitchBot(string nickName, string oauthToken, string channelName, string channelId)
         {
             rng = new Random();
 
@@ -61,7 +61,7 @@
             tPubSub.OnPubSubServiceError += eventHandlers.OnPubSubServiceError;
             tPubSub.OnPubSubServiceConnected += eventHandlers.OnPubSubServiceConnected;
 
-            tPubSub.ListenToFollows(Config.Instance.ChannelID);
+            tPubSub.ListenToFollows(channelId);
 
             tPubSub.Connect();
 

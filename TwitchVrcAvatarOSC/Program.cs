@@ -44,7 +44,7 @@
             Logger.Log("TwitchBot", "Starting bot...", ConsoleColor.DarkMagenta);
             try
             {
-                Bot = new TwitchBot(Config.Instance.TwitchUsername, Config.Instance.TwitchOAuth, Config.Instance.ChannelName);
+                Bot = new TwitchBot(Config.Instance.TwitchUsername, Config.Instance.TwitchOAuth, Config.Instance.ChannelName, Config.Instance.ChannelID);
                 Logger.Log("TwitchBot", "Bot started!", ConsoleColor.DarkMagenta);
             }
             catch (Exception ex)
