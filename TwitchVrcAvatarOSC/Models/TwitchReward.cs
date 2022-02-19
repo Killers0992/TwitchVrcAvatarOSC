@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using TwitchLib.Client.Models;
+using TwitchLib.PubSub.Models.Responses.Messages.Redemption;
 using TwitchVrcAvatarOSC.Bot;
 
 namespace TwitchVrcAvatarOSC.Models

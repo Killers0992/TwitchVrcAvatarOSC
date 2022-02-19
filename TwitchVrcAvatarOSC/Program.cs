@@ -23,7 +23,8 @@
                         OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction()}, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
                         OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } } ,
                         OnUserBanned = new TwitchBan() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} },
-                        OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } }
+                        OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } },
+                        OnFollow = new TwitchFollow() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } }
                     }
                 }, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
 

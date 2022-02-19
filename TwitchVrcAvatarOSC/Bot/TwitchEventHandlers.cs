@@ -6,10 +6,11 @@
 
     public class TwitchEventHandlers
     {
-        public void OnLog(object sender, OnLogArgs e)
+        private TwitchBot? bot;
+
+        public TwitchEventHandlers(TwitchBot bot)
         {
-            if (!Config.Instance.Debug) return;
-            Logger.Debug("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
+            this.bot = bot;
         }
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
@@ -50,6 +51,47 @@
                 else
                     Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}");
             }
+        }
+
+        internal void OnConnected(object? sender, OnConnectedArgs e)
+        {
+            Logger.Log("TwitchBot", $"Connected to channel {e.AutoJoinChannel}!", ConsoleColor.DarkMagenta);
+        }
+
+        public void OnPubSubServiceClosed(object? sender, EventArgs e)
+        {
+            Logger.Log("TwitchPubSub", "Service disconnected!", ConsoleColor.DarkMagenta);
+        }
+
+        public void OnPubSubServiceError(object? sender, TwitchLib.PubSub.Events.OnPubSubServiceErrorArgs e)
+        {
+            Logger.Error("TwitchPubSub", e.Exception.Message, ConsoleColor.DarkMagenta);
+        }
+
+        public void OnClientLog(object? sender, OnLogArgs e)
+        {
+            if (!Config.Instance.Debug) return;
+            Logger.Debug("TwitchClient", e.Data, ConsoleColor.DarkMagenta);
+        }
+
+        public void OnPubSubServiceConnected(object? sender, EventArgs e)
+        {
+            Logger.Log("TwitchPubSub", $"Service connected!", ConsoleColor.DarkMagenta);
+            bot.tPubSub.SendTopics(Config.Instance.TwitchOAuth);
+            Logger.Log("TwitchPubSub", $"Send topics...", ConsoleColor.DarkMagenta);
+        }
+
+        public void OnFollow(object? sender, TwitchLib.PubSub.Events.OnFollowArgs e)
+        {
+            if (Config.Instance.Events.OnFollow == null) return;
+
+            Config.Instance.Events.OnFollow.TryExecuteCommand(e.DisplayName);
+        }
+
+        public void OnLog(object? sender, TwitchLib.PubSub.Events.OnLogArgs e)
+        {
+            if (!Config.Instance.Debug) return;
+            Logger.Debug("TwitchPubSub", e.Data, ConsoleColor.DarkMagenta);
         }
 
         public void OnBeingHosted(object? sender, OnBeingHostedArgs e)

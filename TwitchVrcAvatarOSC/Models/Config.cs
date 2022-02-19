@@ -28,5 +28,6 @@
         public List<TwitchHost> OnBeingHosted { get; set; } = new List<TwitchHost>();
         public TwitchBan? OnUserBanned { get; set; }
         public TwitchTimedout? OnUserTimedout { get; set; }
+        public TwitchFollow? OnFollow { get; set; }
     }
 }
