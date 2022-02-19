@@ -59,6 +59,22 @@ Config values:
 
 - ``ExecuteRandomAction`` - Can be used only if OscOutActions have more than 1 element.
 
+- ``Value`` cant be null in OscOutActions but can have values like true/false (bool), 0/1 (integer), 0.1/0.0 (float)
+
+- ``DefaultValue`` if its null then after x seconds of execution duration is not doing anything. ( values can be same as in ``Value`` ) 
+
+Some samples:
+
+```
+{
+  "ActionName": "/avatar/parameters/VRCEmote",
+  "ExecutionDuration": 0,
+  "DefaultValue": null,
+  "Value": 3
+}
+```
+
+- That in config means ``VRCEmote`` expressions menu parameter will have value set to ``3``.
 
 
 ```
@@ -70,7 +86,7 @@ Config values:
 }
 ```
 
-That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
+- That in config means ``VRCEmote`` expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
 
 
 # Default config
