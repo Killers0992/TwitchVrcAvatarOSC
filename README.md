@@ -23,7 +23,7 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5353651697/artifacts/167582792)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5369129491/artifacts/168414519)
 
 - Channel ID can be found while viewing own channel like https://www.twitch.tv/killers0992 and then inspecting page and finding data-room-id and copy numbers into config.
 
