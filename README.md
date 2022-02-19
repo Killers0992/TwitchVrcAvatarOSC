@@ -25,6 +25,11 @@ Discord: Killers0992#4552
 
 Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5369129491/artifacts/168414519)
 
+- If you are updating constantly updating avatar and changing expressions parameters you need to remove old file from
+
+``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json`` which have your avatar name to geenrate new one!
+
+
 - Channel ID can be found while viewing own channel like https://www.twitch.tv/killers0992 and then inspecting page and finding data-room-id and copy numbers into config.
 
 - You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
