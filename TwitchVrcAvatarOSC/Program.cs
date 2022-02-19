@@ -16,15 +16,15 @@
                 {
                     Events = new TwitchEvents()
                     {
-                        OnCommand = new Dictionary<string, TwitchCommand>() { { "test", new TwitchCommand() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } },
-                        OnBeingHosted = new List<TwitchHost>() { new TwitchHost() { OscOutActions = new List<OscOutAction>() {new OscOutAction() } } },
-                        OnNewSubscriber = new List<TwitchNewSub>() { new TwitchNewSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction() }, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
-                        OnReceiveBits = new List<TwitchBits>() { new TwitchBits() {  OscOutActions = new List<OscOutAction>() { new OscOutAction() } } },
-                        OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction()}, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
-                        OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } } } } ,
-                        OnUserBanned = new TwitchBan() { OscOutActions = new List<OscOutAction>() { new OscOutAction()} },
-                        OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } },
-                        OnFollow = new TwitchFollow() { OscOutActions = new List<OscOutAction>() { new OscOutAction() } }
+                        OnCommand = new Dictionary<string, TwitchCommand>() { { "test", new TwitchCommand() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } } } },
+                        OnBeingHosted = new List<TwitchHost>() { new TwitchHost() { OscOutActions = new List<OscOutAction>() {new OscOutAction() { Value = 1, DefaultValue = 0 } } } },
+                        OnNewSubscriber = new List<TwitchNewSub>() { new TwitchNewSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } }, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
+                        OnReceiveBits = new List<TwitchBits>() { new TwitchBits() {  OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } } },
+                        OnReSubscriber = new List<TwitchReSub>() { new TwitchReSub() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } }, SubPlans = new List<TwitchLib.Client.Enums.SubscriptionPlan>() { TwitchLib.Client.Enums.SubscriptionPlan.NotSet } } },
+                        OnReward = new Dictionary<string, TwitchReward>() { { "<REWARD ID>", new TwitchReward() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } } } } ,
+                        OnUserBanned = new TwitchBan() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } },
+                        OnUserTimedout = new TwitchTimedout() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } },
+                        OnFollow = new TwitchFollow() { OscOutActions = new List<OscOutAction>() { new OscOutAction() { Value = 1, DefaultValue = 0 } } }
                     }
                 }, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
 

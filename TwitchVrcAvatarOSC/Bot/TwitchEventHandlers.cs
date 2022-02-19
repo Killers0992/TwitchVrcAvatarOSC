@@ -53,7 +53,13 @@
             }
         }
 
-        internal void OnConnected(object? sender, OnConnectedArgs e)
+        public void OnListenResponse(object? sender, TwitchLib.PubSub.Events.OnListenResponseArgs e)
+        {
+            if (!Config.Instance.Debug) return;
+            Logger.Debug("TwitchPubSub", $"Response from channel {e.ChannelId}, topic: {e.Topic}, isSuccess: {e.Successful}!", ConsoleColor.DarkMagenta);
+        }
+
+        public void OnConnected(object? sender, OnConnectedArgs e)
         {
             Logger.Log("TwitchBot", $"Connected to channel {e.AutoJoinChannel}!", ConsoleColor.DarkMagenta);
         }
@@ -86,12 +92,6 @@
             if (Config.Instance.Events.OnFollow == null) return;
 
             Config.Instance.Events.OnFollow.TryExecuteCommand(e.DisplayName);
-        }
-
-        public void OnLog(object? sender, TwitchLib.PubSub.Events.OnLogArgs e)
-        {
-            if (!Config.Instance.Debug) return;
-            Logger.Debug("TwitchPubSub", e.Data, ConsoleColor.DarkMagenta);
         }
 
         public void OnBeingHosted(object? sender, OnBeingHostedArgs e)

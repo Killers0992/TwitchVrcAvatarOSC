@@ -1,15 +1,18 @@
 ﻿namespace TwitchVrcAvatarOSC.Bot
 {
+    using TwitchLib.Api;
     using TwitchLib.Client;
     using TwitchLib.Client.Models;
     using TwitchLib.Communication.Clients;
     using TwitchLib.Communication.Models;
     using TwitchLib.PubSub;
+    using TwitchVrcAvatarOSC.Models;
 
     public class TwitchBot
     {
         public static Random rng;
 
+        public TwitchAPI? api;
         public TwitchClient? client;
         public TwitchPubSub? tPubSub;
         TwitchEventHandlers? eventHandlers;
@@ -51,13 +54,14 @@
             client.Connect();
 
             tPubSub = new TwitchPubSub();
-            tPubSub.OnLog += eventHandlers.OnLog;
+            tPubSub.OnListenResponse += eventHandlers.OnListenResponse;
+
             tPubSub.OnFollow += eventHandlers.OnFollow;
             tPubSub.OnPubSubServiceClosed += eventHandlers.OnPubSubServiceClosed;
             tPubSub.OnPubSubServiceError += eventHandlers.OnPubSubServiceError;
             tPubSub.OnPubSubServiceConnected += eventHandlers.OnPubSubServiceConnected;
 
-            tPubSub.ListenToFollows(channelName);
+            tPubSub.ListenToFollows(Config.Instance.ChannelID);
 
             tPubSub.Connect();
 

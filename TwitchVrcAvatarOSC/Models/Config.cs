@@ -13,6 +13,7 @@
         public string TwitchUsername { get; set; } = "twitch-username";
         public string TwitchOAuth { get; set; } = "twitch-oauth";
         public string ChannelName { get; set; } = "channel-name";
+        public string ChannelID { get; set; } = "channel-id";
 
         public string CommandPrefix { get; set; } = "!";
         public TwitchEvents Events { get; set; } = new TwitchEvents();
