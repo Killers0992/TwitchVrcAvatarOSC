@@ -29,7 +29,11 @@
                 }, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
 
             JsonConvert.DeserializeObject<Config>(File.ReadAllText("./config.json"));
+
             File.WriteAllText("./config.json", JsonConvert.SerializeObject(Config.Instance, Formatting.Indented, new Newtonsoft.Json.Converters.StringEnumConverter()));
+
+            if (Config.Instance.TwitchOAuth == "DEBUG")
+                Config.Instance.TwitchOAuth = File.ReadAllText("oauth.txt");
 
             if (Config.Instance == null)
             {
