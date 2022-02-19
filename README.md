@@ -98,6 +98,7 @@ Some samples:
   "TwitchUsername": "twitch-username",
   "TwitchOAuth": "twitch-oauth",
   "ChannelName": "channel-name",
+  "ChannelID": "channel-id",
   "CommandPrefix": "!",
   "Events": {
     "OnCommand": {
@@ -249,6 +250,7 @@ Some samples:
   "TwitchUsername": "twitch-username",
   "TwitchOAuth": "twitch-oauth",
   "ChannelName": "channel-name",
+  "ChannelID": "channel-id",
   "CommandPrefix": "!",
   "Events": {
     "OnCommand": {},
