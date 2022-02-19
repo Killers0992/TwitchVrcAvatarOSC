@@ -201,6 +201,18 @@ That in config means VRCEmote expressions menu parameter will have value set to 
           "Value": 1
         }
       ]
+    },
+    "OnFollow": {
+      "GlobalDelay": "00:00:00",
+      "ExecuteRandomAction": false,
+      "OscOutActions": [
+        {
+          "ActionName": "/avatar/parameters/VRCEmote",
+          "ExecutionDuration": 3,
+          "DefaultValue": 0,
+          "Value": 1
+        }
+      ]
     }
   }
 }
@@ -225,7 +237,8 @@ That in config means VRCEmote expressions menu parameter will have value set to 
     "OnReSubscriber": [],
     "OnBeingHosted": [],
     "OnUserBanned": {},
-    "OnUserTimedout": {}
+    "OnUserTimedout": {},
+    "OnFollow": {}
   }
 }
 ```
