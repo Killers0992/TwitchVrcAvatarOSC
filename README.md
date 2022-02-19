@@ -8,6 +8,7 @@ Currently implemented events:
 - OnUseReward
 - OnReceiveBits
 - OnBeingHosted
+- OnFollow
 
 
 ( OSC code from https://github.com/vrchat/OscCore )
@@ -22,7 +23,14 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5353651697/artifacts/167582792)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5369129491/artifacts/168414519)
+
+- If you are updating constantly updating avatar and changing expressions parameters you need to remove old file from
+
+``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json`` which have your avatar name to generate new one!
+
+
+- Channel ID can be found while viewing own channel like https://www.twitch.tv/killers0992 and then inspecting page and finding data-room-id and copy numbers into config.
 
 - You can get oauth token for current logged in account on twitch via link https://www.twitchapps.com/tmi/
 
@@ -198,6 +206,18 @@ That in config means VRCEmote expressions menu parameter will have value set to 
           "Value": 1
         }
       ]
+    },
+    "OnFollow": {
+      "GlobalDelay": "00:00:00",
+      "ExecuteRandomAction": false,
+      "OscOutActions": [
+        {
+          "ActionName": "/avatar/parameters/VRCEmote",
+          "ExecutionDuration": 3,
+          "DefaultValue": 0,
+          "Value": 1
+        }
+      ]
     }
   }
 }
@@ -222,7 +242,8 @@ That in config means VRCEmote expressions menu parameter will have value set to 
     "OnReSubscriber": [],
     "OnBeingHosted": [],
     "OnUserBanned": {},
-    "OnUserTimedout": {}
+    "OnUserTimedout": {},
+    "OnFollow": {}
   }
 }
 ```
