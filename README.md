@@ -22,6 +22,8 @@ If you need help or any suggestions which stuff i can add
 Discord: Killers0992#4552
 
 
+
+
 # Some information
 
 Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5372550037/artifacts/168600467)
