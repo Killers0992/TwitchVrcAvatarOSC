@@ -14,6 +14,8 @@ Currently implemented events:
 ( OSC code from https://github.com/vrchat/OscCore )
 
 
+
+
 # Contact
 
 If you need help or any suggestions which stuff i can add
@@ -21,9 +23,11 @@ If you need help or any suggestions which stuff i can add
 Discord: Killers0992#4552
 
 
+
+
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5369129491/artifacts/168414519)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5372550037/artifacts/168600467)
 
 - If you are updating constantly updating avatar and changing expressions parameters you need to remove old file from
 
@@ -59,6 +63,22 @@ Config values:
 
 - ``ExecuteRandomAction`` - Can be used only if OscOutActions have more than 1 element.
 
+- ``Value`` cant be null in OscOutActions but can have values like true/false (bool), 0/1 (integer), 0.1/0.0 (float)
+
+- ``DefaultValue`` if its null then after x seconds of execution duration is not doing anything. ( values can be same as in ``Value`` ) 
+
+Some samples:
+
+```
+{
+  "ActionName": "/avatar/parameters/VRCEmote",
+  "ExecutionDuration": 0,
+  "DefaultValue": null,
+  "Value": 3
+}
+```
+
+- That in config means ``VRCEmote`` expressions menu parameter will have value set to ``3``.
 
 
 ```
@@ -70,7 +90,7 @@ Config values:
 }
 ```
 
-That in config means VRCEmote expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
+- That in config means ``VRCEmote`` expressions menu parameter will have value set to ``1`` and after ``3`` seconds value wil be set to ``0``.
 
 
 # Default config
@@ -82,6 +102,7 @@ That in config means VRCEmote expressions menu parameter will have value set to 
   "TwitchUsername": "twitch-username",
   "TwitchOAuth": "twitch-oauth",
   "ChannelName": "channel-name",
+  "ChannelID": "channel-id",
   "CommandPrefix": "!",
   "Events": {
     "OnCommand": {
@@ -233,6 +254,7 @@ That in config means VRCEmote expressions menu parameter will have value set to 
   "TwitchUsername": "twitch-username",
   "TwitchOAuth": "twitch-oauth",
   "ChannelName": "channel-name",
+  "ChannelID": "channel-id",
   "CommandPrefix": "!",
   "Events": {
     "OnCommand": {},
