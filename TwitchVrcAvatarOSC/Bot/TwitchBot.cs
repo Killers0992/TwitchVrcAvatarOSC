@@ -56,12 +56,14 @@
             tPubSub = new TwitchPubSub();
             tPubSub.OnListenResponse += eventHandlers.OnListenResponse;
 
+            tPubSub.OnChannelPointsRewardRedeemed += eventHandlers.OnRewardRedeem;
             tPubSub.OnFollow += eventHandlers.OnFollow;
             tPubSub.OnPubSubServiceClosed += eventHandlers.OnPubSubServiceClosed;
             tPubSub.OnPubSubServiceError += eventHandlers.OnPubSubServiceError;
             tPubSub.OnPubSubServiceConnected += eventHandlers.OnPubSubServiceConnected;
 
             tPubSub.ListenToFollows(channelId);
+            tPubSub.ListenToChannelPoints(channelId);
 
             tPubSub.Connect();
 

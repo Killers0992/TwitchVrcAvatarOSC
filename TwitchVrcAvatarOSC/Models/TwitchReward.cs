@@ -26,7 +26,7 @@ namespace TwitchVrcAvatarOSC.Models
         public bool ExecuteRandomAction { get; set; }
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
-        public bool TryExecuteCommand(ChatMessage message)
+        public bool TryExecuteCommand(Redemption message)
         {
             if (GlobalDelay.TotalSeconds > 0)
             {
@@ -34,37 +34,37 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
                     return false;
                 }
             }
 
-            if (DelayPerUser.TotalSeconds > 0 && !string.IsNullOrEmpty(message.UserId))
+            if (DelayPerUser.TotalSeconds > 0 && !string.IsNullOrEmpty(message.User.Id))
             {
-                if (CurrentUserDelays.TryGetValue(message.UserId, out DateTime delay))
+                if (CurrentUserDelays.TryGetValue(message.User.Id, out DateTime delay))
                 {
                     if (delay < DateTime.Now)
                     {
-                        CurrentUserDelays.Remove(message.UserId);
+                        CurrentUserDelays.Remove(message.User.Id);
                     }
                     else
                     {
-                        Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
+                        Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
                         return false;
                     }
                 }
-                CurrentUserDelays.Add(message.UserId, DateTime.Now.Add(DelayPerUser));
+                CurrentUserDelays.Add(message.User.Id, DateTime.Now.Add(DelayPerUser));
             }
 
             if (!NormalAccess)
             {
-                if (message.SubscribedMonthCount < SubMonths) return false;
+               /* if (message.SubscribedMonthCount < SubMonths) return false;
                 if (SubAccess)
                 {
                     if (!message.IsSubscriber) return false;
                 }
                 if (ModAccess && !message.IsModerator) return false;
-                if (VipAccess && !message.IsVip) return false;
+                if (VipAccess && !message.IsVip) return false;*/
             }
 
             if (ExecuteRandomAction && OscOutActions.Count > 1)
@@ -78,7 +78,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchReward", $"User {message.DisplayName} redeemed reward {message.CustomRewardId} and OSC actions added to queue!");
+            Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} and OSC actions added to queue!");
             return true;
         }
     }

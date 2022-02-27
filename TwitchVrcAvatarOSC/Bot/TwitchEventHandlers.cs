@@ -15,21 +15,6 @@
 
         public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
         {
-            if (!string.IsNullOrEmpty(e.ChatMessage.CustomRewardId))
-            {
-                if (Config.Instance.Events.OnReward.TryGetValue(e.ChatMessage.CustomRewardId, out TwitchReward? rew))
-                {
-                    if (rew.TryExecuteCommand(e.ChatMessage))
-                        Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} executed reward {e.ChatMessage.CustomRewardId}");
-                    else
-                        Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} failed to execute command {e.ChatMessage.CustomRewardId}");
-                }
-                else
-                {
-                    Logger.Log("TwitchReward", $"User {e.ChatMessage.Username} executed reward {e.ChatMessage.CustomRewardId} but that reward id is not added in config!");
-                }
-            }
-
             if (e.ChatMessage.Bits > 0)
             {
                 var bitsEvent = Config.Instance.Events.OnReceiveBits.FirstOrDefault(p => e.ChatMessage.Bits >= p.MinBits && e.ChatMessage.Bits <= p.MaxBits) ?? Config.Instance.Events.OnReceiveBits.OrderByDescending(p => p.MaxBits).FirstOrDefault();
@@ -48,6 +33,24 @@
             {
                 if (!cmd.TryExecuteCommand(e.ChatMessage))
                     Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}");
+            }
+        }
+
+        public void OnRewardRedeem(object? sender, TwitchLib.PubSub.Events.OnChannelPointsRewardRedeemedArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.RewardRedeemed.Redemption.Id))
+            {
+                if (Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Id, out TwitchReward? rew))
+                {
+                    if (rew.TryExecuteCommand(e.RewardRedeemed.Redemption))
+                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Id}");
+                    else
+                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Id}");
+                }
+                else
+                {
+                    Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Id} but that reward id is not added in config!");
+                }
             }
         }
 
