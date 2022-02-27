@@ -11,6 +11,7 @@ namespace TwitchVrcAvatarOSC.Models
         public int SubMonths { get; set; }
         public bool ModAccess { get; set; }
         public bool VipAccess { get; set; }
+        public bool BroadcasterAccess { get; set; }
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
 
@@ -64,6 +65,7 @@ namespace TwitchVrcAvatarOSC.Models
                 }
                 if (ModAccess && !message.IsModerator) return false;
                 if (VipAccess && !message.IsVip) return false;
+                if (BroadcasterAccess && !message.IsBroadcaster) return false;
             }
 
             if (ExecuteRandomAction && OscOutActions.Count > 1)
