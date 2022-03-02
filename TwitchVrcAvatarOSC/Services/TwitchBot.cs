@@ -42,7 +42,6 @@ namespace TwitchVrcAvatarOSC.Services
                     ChannelID = firstUser.Id;
                     TwitchName = firstUser.DisplayName;
                     ChannelName = firstUser.Login;
-                    Console.WriteLine(JsonConvert.SerializeObject(firstUser));
                 }
                 else
                 {
