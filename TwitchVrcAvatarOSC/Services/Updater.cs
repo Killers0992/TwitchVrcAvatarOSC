@@ -11,7 +11,7 @@ namespace TwitchVrcAvatarOSC.Services
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             if (File.Exists("./old_TwitchVrcAvatarOSC.exe"))
-                File.Delete("./TwitchVrcAvatarOSC.exe");
+                File.Delete("./old_TwitchVrcAvatarOSC.exe");
 
             await Task.Delay(5000);
             while (true)
@@ -27,6 +27,13 @@ namespace TwitchVrcAvatarOSC.Services
                 var content = await result.Content.ReadAsStringAsync();
 
                 var versionObject = JsonConvert.DeserializeObject<CurrentVersion>(content);
+
+                if (versionObject.Version == null)
+                {
+                    Logger.Log("Updater", "Remote version is invalid!");
+                    await Task.Delay(15000);
+                    continue;
+                }
 
                 if (Version.TryParse(CurrentVersion.Instance.Version, out Version currentVersion))
                 {
@@ -55,22 +62,19 @@ namespace TwitchVrcAvatarOSC.Services
                                 File.WriteAllBytes("./TwitchBot.zip", bytes);
                                 time.Stop();
                                 Logger.Log("Updater", $"Downloaded file in {(int)time.Elapsed.TotalSeconds} seconds!");
-                                Assembly currentAssembly = Assembly.GetEntryAssembly();
-                                if (currentAssembly == null)
-                                    currentAssembly = Assembly.GetCallingAssembly();
-                                string appFolder = Path.GetDirectoryName(currentAssembly.Location);
-                                string appName = Path.GetFileNameWithoutExtension(currentAssembly.Location);
-                                string appExtension = Path.GetExtension(currentAssembly.Location);
-                                string archivePath = Path.Combine(appFolder, $"old_{appName}{appExtension}");
+                                string currentPath = Path.Combine(AppContext.BaseDirectory, $"TwitchVrcAvatarOSC.exe");
+                                string archivePath = Path.Combine(AppContext.BaseDirectory, $"old_TwitchVrcAvatarOSC.exe");
+                                File.Move(currentPath, archivePath);
+
                                 using (ZipArchive archive = ZipFile.OpenRead("./TwitchBot.zip"))
                                 {
                                     foreach (ZipArchiveEntry entry in archive.Entries.Where(e => e.FullName.Contains("a")))
                                     {
-                                        entry.ExtractToFile(currentAssembly.Location);
+                                        entry.ExtractToFile(currentPath);
                                     }
                                 }
                                 File.Delete("./TwitchBot.zip");
-                                ProcessStartInfo startInfo = new ProcessStartInfo(currentAssembly.Location);
+                                ProcessStartInfo startInfo = new ProcessStartInfo(currentPath);
                                 Process.Start(startInfo);
                                 Process.GetCurrentProcess().Kill();
                             }
