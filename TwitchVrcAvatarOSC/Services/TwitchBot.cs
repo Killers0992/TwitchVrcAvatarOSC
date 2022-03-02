@@ -60,7 +60,7 @@
                 return;
             }
 
-            Logger.Log("TwitchBot", "Starting bot...", ConsoleColor.DarkMagenta);
+            Logger.Log("TwitchBot", "Starting...", ConsoleColor.DarkMagenta);
             client.Initialize(credentials, ChannelName);
 
             eventHandlers = new TwitchEventHandlers(this);
@@ -73,7 +73,6 @@
             client.OnConnected += eventHandlers.OnConnected;
             client.OnDisconnected += eventHandlers.OnDisconnected;
 
-            Logger.Log("TwitchBot", $"Connect to client with channelname {ChannelName} and twitch nickname {TwitchName}");
             client.Connect();
 
             tPubSub = new TwitchPubSub();

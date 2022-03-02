@@ -60,7 +60,7 @@
 
         public void OnConnected(object sender, OnConnectedArgs e)
         {
-            Logger.Log("TwitchBot", $"Connected to channel {e.AutoJoinChannel}!", ConsoleColor.DarkMagenta);
+            Logger.Log("TwitchBot", $"Connected!", ConsoleColor.DarkMagenta);
         }
 
         public void OnPubSubServiceClosed(object sender, EventArgs e)
@@ -75,7 +75,7 @@
 
         public void OnClientLog(object sender, TwitchLib.Client.Events.OnLogArgs e)
         {
-            Logger.Debug("TwitchClient", e.Data, ConsoleColor.DarkMagenta);
+            Logger.Debug("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
         }
 
         public void OnDisconnected(object sender, OnDisconnectedEventArgs e)
@@ -85,9 +85,8 @@
 
         public void OnPubSubServiceConnected(object sender, EventArgs e)
         {
-            Logger.Log("TwitchPubSub", $"Service connected!", ConsoleColor.DarkMagenta);
+            Logger.Log("TwitchPubSub", $"Connected!", ConsoleColor.DarkMagenta);
             bot.tPubSub.SendTopics(Config.Instance.TwitchOAuth);
-            Logger.Log("TwitchPubSub", $"Sended topics!", ConsoleColor.DarkMagenta);
         }
 
         public void OnChannelSubscription(object sender, OnChannelSubscriptionArgs e)

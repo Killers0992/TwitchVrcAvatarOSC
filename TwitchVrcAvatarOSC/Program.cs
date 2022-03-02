@@ -1,4 +1,15 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿
+using System.Text;
+
+var builder = WebApplication.CreateBuilder(args);
+
+CurrentVersion.Instance = JsonConvert.DeserializeObject<CurrentVersion>(Encoding.UTF8.GetString(Resources.version));
+
+Logger.Log("TwitchBot", $"Version: {CurrentVersion.Instance.Version}{(CurrentVersion.Instance.Changelog.Length != 0 ? ", Changelogs:" : string.Empty)}");
+foreach (var change in CurrentVersion.Instance.Changelog)
+{
+    Logger.Log("Updater", $" - {change}");
+}
 
 if (!File.Exists("./config.json"))
     File.WriteAllText("./config.json", JsonConvert.SerializeObject(new Config()
@@ -22,6 +33,7 @@ File.WriteAllText("./config.json", JsonConvert.SerializeObject(Config.Instance, 
 
 builder.Services.AddHostedService<TwitchBot>();
 builder.Services.AddHostedService<OscActions>();
+builder.Services.AddHostedService<Updater>();
 
 builder.Services.AddControllersWithViews();
 
