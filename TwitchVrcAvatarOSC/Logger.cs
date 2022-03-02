@@ -1,4 +1,5 @@
-﻿using TwitchVrcAvatarOSC.Models;
+﻿using System;
+using TwitchVrcAvatarOSC.Models;
 
 namespace TwitchVrcAvatarOSC
 {

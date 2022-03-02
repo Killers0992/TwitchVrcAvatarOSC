@@ -2,7 +2,10 @@
 {
     using System;
     using TwitchLib.Client.Events;
+    using TwitchLib.Communication.Events;
+    using TwitchLib.PubSub.Events;
     using TwitchVrcAvatarOSC.Models;
+    using TwitchVrcAvatarOSC.Services;
 
     public class TwitchEventHandlers
     {
@@ -75,20 +78,54 @@
             Logger.Error("TwitchPubSub", e.Exception.Message, ConsoleColor.DarkMagenta);
         }
 
-        public void OnClientLog(object? sender, OnLogArgs e)
+        public void OnClientLog(object? sender, TwitchLib.Client.Events.OnLogArgs e)
         {
             if (!Config.Instance.Debug) return;
             Logger.Debug("TwitchClient", e.Data, ConsoleColor.DarkMagenta);
+        }
+
+        public void OnDisconnected(object sender, OnDisconnectedEventArgs e)
+        {
+            Logger.Log("TwitchBot", $"Disconnected!", ConsoleColor.DarkMagenta);
         }
 
         public void OnPubSubServiceConnected(object? sender, EventArgs e)
         {
             Logger.Log("TwitchPubSub", $"Service connected!", ConsoleColor.DarkMagenta);
             bot.tPubSub.SendTopics(Config.Instance.TwitchOAuth);
-            Logger.Log("TwitchPubSub", $"Send topics...", ConsoleColor.DarkMagenta);
+            Logger.Log("TwitchPubSub", $"Sended topics!", ConsoleColor.DarkMagenta);
         }
 
-        public void OnFollow(object? sender, TwitchLib.PubSub.Events.OnFollowArgs e)
+        public void OnChannelSubscription(object sender, OnChannelSubscriptionArgs e)
+        {
+            var cumulativeMonths = e.Subscription.CumulativeMonths ?? 0;
+            if (cumulativeMonths != 0)
+            {
+                var targetSubCommand = Config.Instance.Events.OnReSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.Subscription.SubscriptionPlan) && cumulativeMonths >= p.MinMonths && cumulativeMonths <= p.MaxMonths) ?? Config.Instance.Events.OnReSubscriber.Where(p => p.SubPlans.Contains(e.Subscription.SubscriptionPlan)).OrderByDescending(p => p.MaxMonths).FirstOrDefault();
+
+                if (targetSubCommand == null)
+                {
+                    Logger.Log($"TwitchReSub", $"User {e.Subscription.DisplayName} subbed for {cumulativeMonths} months but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!");
+                    return;
+                }
+
+                targetSubCommand.TryExecuteCommand(cumulativeMonths, e.Subscription);
+            }
+            else
+            {
+                var targetSubCommand = Config.Instance.Events.OnNewSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.Subscription.SubscriptionPlan));
+
+                if (targetSubCommand == null)
+                {
+                    Logger.Log($"TwitchNewSub", $"User {e.Subscription.DisplayName} subbed but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!");
+                    return;
+                }
+
+                targetSubCommand.TryExecuteCommand(e.Subscription);
+            }
+        }
+
+        public void OnFollow(object? sender, OnFollowArgs e)
         {
             if (Config.Instance.Events.OnFollow == null) return;
 
@@ -121,34 +158,6 @@
             if (Config.Instance.Events.OnUserBanned == null) return;
 
             Config.Instance.Events.OnUserBanned.TryExecuteCommand(e.UserBan.Username);
-        }
-
-        public void OnReSubscriber(object? sender, OnReSubscriberArgs e)
-        {
-            if (!int.TryParse(e.ReSubscriber.MsgParamCumulativeMonths, out int months)) return;
-
-            var targetSubCommand = Config.Instance.Events.OnReSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan) && months >= p.MinMonths && months <= p.MaxMonths) ?? Config.Instance.Events.OnReSubscriber.Where(p => p.SubPlans.Contains(e.ReSubscriber.SubscriptionPlan)).OrderByDescending(p => p.MaxMonths).FirstOrDefault();
-
-            if (targetSubCommand == null)
-            {
-                Logger.Log($"TwitchReSub", $"User {e.ReSubscriber.DisplayName} subbed for {months} months but sub plan {e.ReSubscriber.SubscriptionPlan} is not configured in config!");
-                return;
-            }
-
-            targetSubCommand.TryExecuteCommand(months, e.ReSubscriber);
-        }
-
-        public void OnNewSubscriber(object? sender, OnNewSubscriberArgs e)
-        {
-            var targetSubCommand = Config.Instance.Events.OnNewSubscriber.FirstOrDefault(p => p.SubPlans.Contains(e.Subscriber.SubscriptionPlan));
-
-            if (targetSubCommand == null)
-            {
-                Logger.Log($"TwitchNewSub", $"User {e.Subscriber.DisplayName} subbed but sub plan {e.Subscriber.SubscriptionPlan} is not configured in config!");
-                return;
-            }
-
-            targetSubCommand.TryExecuteCommand(e.Subscriber);
         }
     }
 }

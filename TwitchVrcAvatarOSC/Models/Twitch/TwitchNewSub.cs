@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TwitchLib.Client.Enums;
 using TwitchLib.Client.Models;
+using TwitchLib.PubSub.Enums;
+using TwitchLib.PubSub.Models.Responses.Messages;
 using TwitchVrcAvatarOSC.Bot;
+using TwitchVrcAvatarOSC.Services;
 
 namespace TwitchVrcAvatarOSC.Models
 {
-    public class TwitchReSub
+    public class TwitchNewSub
     {
-        public int MinMonths { get; set; } = 0;
-        public int MaxMonths { get; set; } = 365;
-
         public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>();
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
@@ -25,7 +24,7 @@ namespace TwitchVrcAvatarOSC.Models
         public bool ExecuteRandomAction { get; set; }
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
-        public bool TryExecuteCommand(int months, ReSubscriber sub)
+        public bool TryExecuteCommand(ChannelSubscription sub)
         {
             if (GlobalDelay.TotalSeconds > 0)
             {
@@ -33,7 +32,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchReSub", $"User {sub.DisplayName} subbed but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Log($"TwitchNewSub", $"User {sub.DisplayName} subbed but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
                     return false;
                 }
             }
@@ -49,7 +48,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchReSub", $"User {sub.DisplayName} resubbed with plan {sub.SubscriptionPlan} for {months} and OSC actions added to queue!");
+            Logger.Log($"TwitchNewSub", $"User {sub.DisplayName} subbed with plan {sub.SubscriptionPlan} and OSC actions added to queue!");
             return true;
         }
     }

@@ -2,19 +2,12 @@
 {
     public class Config
     {
-        public static Config? Instance;
-        public Config() => Instance = this;
+        public static Config Instance;
 
         public string OscServerIP { get; set; } = "127.0.0.1";
         public int OscServerPort { get; set; } = 9000;
-
         public bool Debug { get; set; }
-
-        public string TwitchUsername { get; set; } = "twitch-username";
         public string TwitchOAuth { get; set; } = "twitch-oauth";
-        public string ChannelName { get; set; } = "channel-name";
-        public string ChannelID { get; set; } = "channel-id";
-
         public string CommandPrefix { get; set; } = "!";
         public TwitchEvents Events { get; set; } = new TwitchEvents();
     }

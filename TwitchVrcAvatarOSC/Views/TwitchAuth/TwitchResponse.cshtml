@@ -1,0 +1,12 @@
+﻿<div">
+    Token
+    <input type="text" id="tokenField"/>
+</div>
+
+<script type="text/javascript">
+    if (location.href.indexOf("#") != -1) {
+        // Your code in here accessing the string like this
+        var token = location.href.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
+        tokenField.value = token
+    }
+</script>

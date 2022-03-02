@@ -1,37 +1,21 @@
-﻿using OscCore;
+﻿using Microsoft.Extensions.Hosting;
+using OscCore;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using TwitchVrcAvatarOSC.Models;
 
 namespace TwitchVrcAvatarOSC
 {
-    public class OscActions
+    public class OscActions : BackgroundService
     {
         static OscClient? _client;
 
         public static ConcurrentDictionary<string, Queue<OscOutAction>> ActionsQueue = new ConcurrentDictionary<string, Queue<OscOutAction>>();
 
         public static ConcurrentDictionary<string, OscOutAction> CurrentlyRunningActions = new ConcurrentDictionary<string, OscOutAction>();
-
-        public OscActions(string connectTo, int port, int delayBetweenExecutions = 50)
-        {
-            Task.Factory.StartNew(async () =>
-            {
-                _client = new OscClient(connectTo, port);
-                while (true)
-                {
-                    try
-                    {
-                        TryExecuting();
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Error("OsrActions", ex.Message, ConsoleColor.White);
-                    }
-                    await Task.Delay(delayBetweenExecutions);
-                }
-            });
-        }
-
 
         public static void EnqueueAction(OscOutAction action)
         {
@@ -101,5 +85,23 @@ namespace TwitchVrcAvatarOSC
             }
         }
 
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            Logger.Log("OsrClient", $"Connecting to OSR Server... ( IP: {Config.Instance.OscServerIP}, Port: {Config.Instance.OscServerPort} )", ConsoleColor.DarkMagenta);
+            _client = new OscClient(Config.Instance.OscServerIP, Config.Instance.OscServerPort);
+            Logger.Log("OsrClient", "Connected to OSR Server!", ConsoleColor.DarkMagenta);
+            while (true)
+            {
+                try
+                {
+                    TryExecuting();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("OsrActions", ex.Message, ConsoleColor.White);
+                }
+                await Task.Delay(50);
+            }
+        }
     }
 }

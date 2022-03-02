@@ -1,19 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TwitchLib.Client.Enums;
-using TwitchLib.Client.Models;
-using TwitchVrcAvatarOSC.Bot;
 
 namespace TwitchVrcAvatarOSC.Models
 {
-    public class TwitchNewSub
+    public class TwitchBan
     {
-        public List<SubscriptionPlan> SubPlans { get; set; } = new List<SubscriptionPlan>();
-
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
 
         [JsonIgnore]
@@ -22,7 +14,7 @@ namespace TwitchVrcAvatarOSC.Models
         public bool ExecuteRandomAction { get; set; }
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
-        public bool TryExecuteCommand(Subscriber sub)
+        public bool TryExecuteCommand(string username)
         {
             if (GlobalDelay.TotalSeconds > 0)
             {
@@ -30,7 +22,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchNewSub", $"User {sub.DisplayName} subbed but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Log($"TwitchBan", $"User {username} got banned but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
                     return false;
                 }
             }
@@ -46,7 +38,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchNewSub", $"User {sub.DisplayName} subbed with plan {sub.SubscriptionPlan} and OSC actions added to queue!");
+            Logger.Log($"TwitchBan", $"User {username} got banned and OSC actions added to queue!");
             return true;
         }
     }
