@@ -1,7 +1,7 @@
 {
-  "Version": "1.0.0",
+  "Version": "1.0.1",
   "Changelog": [
-    "Add auto updater"
+    "Check updater"
   ],
   "SuiteID": 0,
   "ArtifactID": 0
