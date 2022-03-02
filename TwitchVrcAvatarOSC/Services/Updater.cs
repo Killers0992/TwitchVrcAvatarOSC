@@ -58,13 +58,13 @@ namespace TwitchVrcAvatarOSC.Services
                             }
 
                             Logger.Log("Updater", $"Application will be updated in 5 seconds.");
-                            await Task.Delay(5000); 
+                            await Task.Delay(5000);
+                            var time = new Stopwatch();
+                            time.Start();
+                            Logger.Log("Updater", $"Start downloading file...");
                             result = await _client.GetAsync($"https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/download/{versionObject.Version}/TwitchBot.zip");
                             if (result.IsSuccessStatusCode)
                             {
-                                Logger.Log("Updater", $"Start downloading file...");
-                                var time = new Stopwatch();
-                                time.Start();
                                 var bytes = await result.Content.ReadAsByteArrayAsync();
                                 File.WriteAllBytes("./TwitchBot.zip", bytes);
                                 time.Stop();
@@ -81,12 +81,14 @@ namespace TwitchVrcAvatarOSC.Services
                                     }
                                 }
                                 File.Delete("./TwitchBot.zip");
+                                time.Stop();
                                 ProcessStartInfo startInfo = new ProcessStartInfo(currentPath);
                                 Process.Start(startInfo);
                                 Process.GetCurrentProcess().Kill();
                             }
                             else
                             {
+                                time = null;
                                 Logger.Log("Updater", $"Remote file for version \"{versionObject.Version}\" is invalid!");
                                 await Task.Delay(15000);
                                 continue;
