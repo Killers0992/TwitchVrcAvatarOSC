@@ -11,9 +11,6 @@ Currently implemented events:
 - OnFollow
 
 
-( OSC code from https://github.com/vrchat/OscCore )
-
-
 
 
 # Contact
