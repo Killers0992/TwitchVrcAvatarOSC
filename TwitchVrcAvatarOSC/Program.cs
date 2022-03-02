@@ -1,15 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.IO;
-using System.Threading.Tasks;
-using TwitchLib.PubSub.Enums;
-using TwitchVrcAvatarOSC;
-using TwitchVrcAvatarOSC.Models;
-
-var builder = WebApplication.CreateBuilder(args);
+﻿var builder = WebApplication.CreateBuilder(args);
 
 if (!File.Exists("./config.json"))
     File.WriteAllText("./config.json", JsonConvert.SerializeObject(new Config()

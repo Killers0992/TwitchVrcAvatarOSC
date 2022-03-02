@@ -16,9 +16,6 @@ namespace TwitchVrcAvatarOSC.Controllers
         }
 
         [HttpGet("~/twitch/response")]
-        public async Task<IActionResult> TwitchResponse()
-        {
-            return View();
-        }
+        public IActionResult TwitchResponse() => View();
     }
 }

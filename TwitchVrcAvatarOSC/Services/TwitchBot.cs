@@ -1,18 +1,4 @@
-﻿using Microsoft.Extensions.Hosting;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using TwitchLib.Api;
-using TwitchLib.Client;
-using TwitchLib.Client.Models;
-using TwitchLib.Communication.Clients;
-using TwitchLib.Communication.Models;
-using TwitchLib.PubSub;
-using TwitchVrcAvatarOSC.Bot;
-using TwitchVrcAvatarOSC.Models;
-
-namespace TwitchVrcAvatarOSC.Services
+﻿namespace TwitchVrcAvatarOSC.Services
 {
     public class TwitchBot : BackgroundService
     {

@@ -1,7 +1,4 @@
-﻿using System;
-using TwitchVrcAvatarOSC.Models;
-
-namespace TwitchVrcAvatarOSC
+﻿namespace TwitchVrcAvatarOSC
 {
     public class Logger
     {

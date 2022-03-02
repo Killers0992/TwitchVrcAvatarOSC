@@ -41,18 +41,18 @@
 
         public void OnRewardRedeem(object? sender, TwitchLib.PubSub.Events.OnChannelPointsRewardRedeemedArgs e)
         {
-            if (!string.IsNullOrEmpty(e.RewardRedeemed.Redemption.Id))
+            if (!string.IsNullOrEmpty(e.RewardRedeemed.Redemption.Reward.Id))
             {
-                if (Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Id, out TwitchReward? rew))
+                if (Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Reward.Id, out TwitchReward? rew))
                 {
                     if (rew.TryExecuteCommand(e.RewardRedeemed.Redemption))
-                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Id}");
+                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id}");
                     else
-                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Id}");
+                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Reward.Id}");
                 }
                 else
                 {
-                    Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Id} but that reward id is not added in config!");
+                    Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id} but that reward id is not added in config!");
                 }
             }
         }
