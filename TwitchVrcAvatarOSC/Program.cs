@@ -8,7 +8,7 @@ CurrentVersion.Instance = JsonConvert.DeserializeObject<CurrentVersion>(Encoding
 Logger.Log("TwitchBot", $"Version: {CurrentVersion.Instance.Version}{(CurrentVersion.Instance.Changelog.Length != 0 ? ", Changelogs:" : string.Empty)}");
 foreach (var change in CurrentVersion.Instance.Changelog)
 {
-    Logger.Log("Updater", $" - {change}");
+    Logger.Log("TwitchBot", $" - {change}");
 }
 
 if (!File.Exists("./config.json"))

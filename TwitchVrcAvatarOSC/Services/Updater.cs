@@ -39,7 +39,7 @@ namespace TwitchVrcAvatarOSC.Services
                 {
                     if (Version.TryParse(versionObject.Version, out Version newVersion))
                     {
-                        if (currentVersion.CompareTo(versionObject) < 0)
+                        if (currentVersion.CompareTo(newVersion) < 0)
                         {
                             Logger.Log("Updater", $"New version \"{versionObject.Version}\" is avaliable!");
                             if (versionObject.Changelog.Length > 0)
@@ -77,6 +77,12 @@ namespace TwitchVrcAvatarOSC.Services
                                 ProcessStartInfo startInfo = new ProcessStartInfo(currentPath);
                                 Process.Start(startInfo);
                                 Process.GetCurrentProcess().Kill();
+                            }
+                            else
+                            {
+                                Logger.Log("Updater", $"Remote file for version \"{versionObject.Version}\" is invalid!");
+                                await Task.Delay(15000);
+                                continue;
                             }
                         }
                         else
