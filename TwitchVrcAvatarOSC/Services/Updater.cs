@@ -7,6 +7,7 @@ namespace TwitchVrcAvatarOSC.Services
     {
         public string URL => "https://raw.githubusercontent.com/Killers0992/TwitchVrcAvatarOSC/master/TwitchVrcAvatarOSC/version.json";
         HttpClient _client = new HttpClient();
+        bool received;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -35,20 +36,32 @@ namespace TwitchVrcAvatarOSC.Services
                     continue;
                 }
 
+
                 if (Version.TryParse(CurrentVersion.Instance.Version, out Version currentVersion))
                 {
                     if (Version.TryParse(versionObject.Version, out Version newVersion))
                     {
                         if (currentVersion.CompareTo(newVersion) < 0)
                         {
-                            Logger.Log("Updater", $"New version \"{versionObject.Version}\" is avaliable!");
-                            if (versionObject.Changelog.Length > 0)
+                            if (!received)
                             {
-                                Logger.Log("Updater", $"Changelogs:");
-                                foreach(var change in versionObject.Changelog)
+                                received = true;
+                                Logger.Log("Updater", $"New version \"{versionObject.Version}\" is avaliable!");
+                                if (versionObject.Changelog.Length > 0)
                                 {
-                                    Logger.Log("Updater", $" - {change}");
+                                    Logger.Log("Updater", $"Changelogs:");
+                                    foreach (var change in versionObject.Changelog)
+                                    {
+                                        Logger.Log("Updater", $" - {change}");
+                                    }
                                 }
+                            }
+
+                            if (versionObject.ArtifactID == CurrentVersion.Instance.ArtifactID)
+                            {
+                                Logger.Log("Updater", "Waiting for file update on remote config...");
+                                await Task.Delay(15000);
+                                continue;
                             }
                             Logger.Log("Updater", $"Application will be updated in 5 seconds.");
                             await Task.Delay(5000);
