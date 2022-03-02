@@ -9,7 +9,7 @@
             string response_type = "token";
             string scopes = "chat:read+channel:read:redemptions+channel:read:subscriptions";
 
-            return Redirect($"https://id.twitch.tv/oauth2/authorize?client_id={TwitchBot.ClientID}&redirect_uri={redirect_uri}&response_type={response_type}&scope={scopes}");
+            return Redirect($"https://id.twitch.tv/oauth2/authorize?client_id={TwitchBot.ClientID}&redirect_uri={redirect_uri}&response_type={response_type}&scope={scopes}&force_verify=true");
         }
 
         [HttpGet("~/twitch/response")]
