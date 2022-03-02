@@ -6,7 +6,7 @@
 
         public string Version { get; set; }
         public string[] Changelog { get; set; }
-        public int SuiteID { get; set; }
-        public int ArtifactID { get; set; }
+        public long SuiteID { get; set; }
+        public long ArtifactID { get; set; }
     }
 }
