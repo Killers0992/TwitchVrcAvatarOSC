@@ -24,7 +24,7 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/latest/TwitchBot.zip)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/latest)
 
 - If you want easily get REWARD IDS just redeem something via points and in console check for
 
