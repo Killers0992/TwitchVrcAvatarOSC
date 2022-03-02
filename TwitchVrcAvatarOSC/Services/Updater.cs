@@ -57,15 +57,9 @@ namespace TwitchVrcAvatarOSC.Services
                                 }
                             }
 
-                            if (versionObject.ArtifactID == CurrentVersion.Instance.ArtifactID)
-                            {
-                                Logger.Log("Updater", "Waiting for file update on remote config...");
-                                await Task.Delay(15000);
-                                continue;
-                            }
                             Logger.Log("Updater", $"Application will be updated in 5 seconds.");
-                            await Task.Delay(5000);
-                            result = await _client.GetAsync($"https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/{versionObject.SuiteID}/artifacts/{versionObject.ArtifactID}");
+                            await Task.Delay(5000); 
+                            result = await _client.GetAsync($"https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/download/{versionObject.Version}/TwitchBot.zip");
                             if (result.IsSuccessStatusCode)
                             {
                                 Logger.Log("Updater", $"Start downloading file...");
