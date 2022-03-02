@@ -28,7 +28,7 @@ Currently implemented events:
 
 - Possible parameters for your avatar which can be used in OCS can be found in 
 
-``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json``
+``LocalLow/VRChat/VRChat/OCS/<userid>/<avatarid>.json``
 
 https://docs.vrchat.com/v2022.1.1/docs/osc-avatar-parameters
 
