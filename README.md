@@ -27,7 +27,7 @@ Discord: Killers0992#4552
 
 # Some information
 
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5464678750/artifacts/173938461)
+Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5466580977/artifacts/174054954)
 
 - If you are updating constantly updating avatar and changing expressions parameters you need to remove old file from
 
