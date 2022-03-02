@@ -10,21 +10,17 @@ Currently implemented events:
 - OnBeingHosted
 - OnFollow
 
+# Download
+
+[Link](https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/latest)
 
 
 
 # Contact
 
-If you need help or any suggestions which stuff i can add
-
-Discord: Killers0992#4552
-
-
-
+![Discord Banner](https://discordapp.com/api/guilds/948581245527425114/widget.png?style=banner3)
 
 # Some information
-
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/latest)
 
 - If you want easily get REWARD IDS just redeem something via points and in console check for
 
