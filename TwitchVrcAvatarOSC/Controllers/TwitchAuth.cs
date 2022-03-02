@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-
-namespace TwitchVrcAvatarOSC.Controllers
+﻿namespace TwitchVrcAvatarOSC.Controllers
 {
     public class TwitchAuth : Controller
     {
         [HttpGet("~/twitch/link")]
-        public async Task<IActionResult> TwitchLink()
+        public IActionResult TwitchLink()
         {
             string redirect_uri = "http://localhost:3000/twitch/response";
             string response_type = "token";

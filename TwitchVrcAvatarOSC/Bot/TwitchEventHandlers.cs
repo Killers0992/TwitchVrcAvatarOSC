@@ -9,14 +9,14 @@
 
     public class TwitchEventHandlers
     {
-        private TwitchBot? bot;
+        private TwitchBot bot;
 
         public TwitchEventHandlers(TwitchBot bot)
         {
             this.bot = bot;
         }
 
-        public void OnMessageReceived(object? sender, OnMessageReceivedArgs e)
+        public void OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
             if (e.ChatMessage.Bits > 0)
             {
@@ -32,55 +32,49 @@
 
             string cmdName = e.ChatMessage.Message.Remove(0, 1);
 
-            if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand? cmd))
+            if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
             {
                 if (!cmd.TryExecuteCommand(e.ChatMessage))
                     Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}");
             }
         }
 
-        public void OnRewardRedeem(object? sender, TwitchLib.PubSub.Events.OnChannelPointsRewardRedeemedArgs e)
+        public void OnRewardRedeem(object sender, TwitchLib.PubSub.Events.OnChannelPointsRewardRedeemedArgs e)
         {
-            if (!string.IsNullOrEmpty(e.RewardRedeemed.Redemption.Reward.Id))
+            if (!Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Reward.Id, out TwitchReward rew))
             {
-                if (Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Reward.Id, out TwitchReward? rew))
-                {
-                    if (rew.TryExecuteCommand(e.RewardRedeemed.Redemption))
-                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id}");
-                    else
-                        Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Reward.Id}");
-                }
-                else
-                {
-                    Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id} but that reward id is not added in config!");
-                }
+                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} used reward {e.RewardRedeemed.Redemption.Reward.Id} but that reward id is not added in config!");
+                return;
             }
+
+            if (rew.TryExecuteCommand(e.RewardRedeemed.Redemption))
+                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id}");
+            else
+                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Reward.Id}");
         }
 
-        public void OnListenResponse(object? sender, TwitchLib.PubSub.Events.OnListenResponseArgs e)
+        public void OnListenResponse(object sender, TwitchLib.PubSub.Events.OnListenResponseArgs e)
         {
-            if (!Config.Instance.Debug) return;
             Logger.Debug("TwitchPubSub", $"Response from channel {e.ChannelId}, topic: {e.Topic}, isSuccess: {e.Successful}!", ConsoleColor.DarkMagenta);
         }
 
-        public void OnConnected(object? sender, OnConnectedArgs e)
+        public void OnConnected(object sender, OnConnectedArgs e)
         {
             Logger.Log("TwitchBot", $"Connected to channel {e.AutoJoinChannel}!", ConsoleColor.DarkMagenta);
         }
 
-        public void OnPubSubServiceClosed(object? sender, EventArgs e)
+        public void OnPubSubServiceClosed(object sender, EventArgs e)
         {
             Logger.Log("TwitchPubSub", "Service disconnected!", ConsoleColor.DarkMagenta);
         }
 
-        public void OnPubSubServiceError(object? sender, TwitchLib.PubSub.Events.OnPubSubServiceErrorArgs e)
+        public void OnPubSubServiceError(object sender, TwitchLib.PubSub.Events.OnPubSubServiceErrorArgs e)
         {
             Logger.Error("TwitchPubSub", e.Exception.Message, ConsoleColor.DarkMagenta);
         }
 
-        public void OnClientLog(object? sender, TwitchLib.Client.Events.OnLogArgs e)
+        public void OnClientLog(object sender, TwitchLib.Client.Events.OnLogArgs e)
         {
-            if (!Config.Instance.Debug) return;
             Logger.Debug("TwitchClient", e.Data, ConsoleColor.DarkMagenta);
         }
 
@@ -89,7 +83,7 @@
             Logger.Log("TwitchBot", $"Disconnected!", ConsoleColor.DarkMagenta);
         }
 
-        public void OnPubSubServiceConnected(object? sender, EventArgs e)
+        public void OnPubSubServiceConnected(object sender, EventArgs e)
         {
             Logger.Log("TwitchPubSub", $"Service connected!", ConsoleColor.DarkMagenta);
             bot.tPubSub.SendTopics(Config.Instance.TwitchOAuth);
@@ -125,14 +119,18 @@
             }
         }
 
-        public void OnFollow(object? sender, OnFollowArgs e)
+        public void OnFollow(object sender, OnFollowArgs e)
         {
-            if (Config.Instance.Events.OnFollow == null) return;
+            if (Config.Instance.Events.OnFollow == null)
+            {
+                Logger.Log($"TwitchFollow", $"User {e.Username} followed channel but event OnFollow is not configured!");
+                return;
+            }
 
             Config.Instance.Events.OnFollow.TryExecuteCommand(e.DisplayName);
         }
 
-        public void OnBeingHosted(object? sender, OnBeingHostedArgs e)
+        public void OnBeingHosted(object sender, OnBeingHostedArgs e)
         {
             var targetCommand = Config.Instance.Events.OnBeingHosted.FirstOrDefault(p => e.BeingHostedNotification.Viewers >= p.MinViewers && e.BeingHostedNotification.Viewers <= p.MaxViewers) ?? Config.Instance.Events.OnBeingHosted.OrderByDescending(p => p.MaxViewers).FirstOrDefault();
 
@@ -145,7 +143,7 @@
             targetCommand.TryExecuteCommand(e.BeingHostedNotification);
         }
 
-        public void OnUserTimedout(object? sender, OnUserTimedoutArgs e)
+        public void OnUserTimedout(object sender, OnUserTimedoutArgs e)
         {
             if (Config.Instance.Events.OnUserTimedout == null) return;
 
@@ -153,7 +151,7 @@
         }
 
 
-        public void OnUserBanned(object? sender, OnUserBannedArgs e)
+        public void OnUserBanned(object sender, OnUserBannedArgs e)
         {
             if (Config.Instance.Events.OnUserBanned == null) return;
 

@@ -20,8 +20,8 @@
         public List<TwitchNewSub> OnNewSubscriber { get; set; } = new List<TwitchNewSub>();
         public List<TwitchReSub> OnReSubscriber { get; set; } = new List<TwitchReSub>();
         public List<TwitchHost> OnBeingHosted { get; set; } = new List<TwitchHost>();
-        public TwitchBan? OnUserBanned { get; set; }
-        public TwitchTimedout? OnUserTimedout { get; set; }
-        public TwitchFollow? OnFollow { get; set; }
+        public TwitchBan OnUserBanned { get; set; }
+        public TwitchTimedout OnUserTimedout { get; set; }
+        public TwitchFollow OnFollow { get; set; }
     }
 }

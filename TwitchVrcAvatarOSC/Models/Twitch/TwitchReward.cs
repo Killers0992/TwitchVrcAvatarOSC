@@ -1,28 +1,16 @@
-﻿using Newtonsoft.Json;
-using TwitchLib.Client.Models;
-using TwitchLib.PubSub.Models.Responses.Messages.Redemption;
-using TwitchVrcAvatarOSC.Bot;
+﻿using TwitchLib.PubSub.Models.Responses.Messages.Redemption;
 
 namespace TwitchVrcAvatarOSC.Models
 {
     public class TwitchReward
     {
-        public bool NormalAccess { get; set; } = true;
-        public bool SubAccess { get; set; }
-        public int SubMonths { get; set; }
-        public bool ModAccess { get; set; }
-        public bool VipAccess { get; set; }
+        [JsonIgnore]
+        DateTime CurrentGlobalDelay = DateTime.Now;
+        [JsonIgnore]
+        Dictionary<string, DateTime> CurrentUserDelays = new Dictionary<string, DateTime>();
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
-
-        [JsonIgnore]
-        public DateTime CurrentGlobalDelay = DateTime.Now;
-
         public TimeSpan DelayPerUser { get; set; } = TimeSpan.Zero;
-
-        [JsonIgnore]
-        public Dictionary<string, DateTime> CurrentUserDelays = new Dictionary<string, DateTime>();
-
         public bool ExecuteRandomAction { get; set; }
         public List<OscOutAction> OscOutActions { get; set; } = new List<OscOutAction>();
 
@@ -54,17 +42,6 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                 }
                 CurrentUserDelays.Add(message.User.Id, DateTime.Now.Add(DelayPerUser));
-            }
-
-            if (!NormalAccess)
-            {
-               /* if (message.SubscribedMonthCount < SubMonths) return false;
-                if (SubAccess)
-                {
-                    if (!message.IsSubscriber) return false;
-                }
-                if (ModAccess && !message.IsModerator) return false;
-                if (VipAccess && !message.IsVip) return false;*/
             }
 
             if (ExecuteRandomAction && OscOutActions.Count > 1)

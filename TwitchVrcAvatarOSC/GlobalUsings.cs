@@ -14,6 +14,7 @@ global using TwitchVrcAvatarOSC.Bot;
 global using TwitchVrcAvatarOSC.Models;
 global using TwitchVrcAvatarOSC.Services;
 
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Logging;

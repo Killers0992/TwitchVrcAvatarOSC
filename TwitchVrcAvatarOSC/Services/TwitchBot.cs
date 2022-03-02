@@ -9,10 +9,10 @@
         public static string TwitchName;
         public static string ChannelName;
 
-        public TwitchAPI? api;
-        public TwitchClient? client;
-        public TwitchPubSub? tPubSub;
-        TwitchEventHandlers? eventHandlers;
+        public TwitchAPI api;
+        public TwitchClient client;
+        public TwitchPubSub tPubSub;
+        TwitchEventHandlers eventHandlers;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

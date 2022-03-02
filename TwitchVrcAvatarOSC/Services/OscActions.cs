@@ -1,50 +1,39 @@
-﻿using Microsoft.Extensions.Hosting;
-using OscCore;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using TwitchVrcAvatarOSC.Models;
+﻿using CoreOSC;
+using CoreOSC.IO;
 
 namespace TwitchVrcAvatarOSC
 {
     public class OscActions : BackgroundService
     {
-        static OscClient? _client;
+        static UdpClient _client;
+        static IPEndPoint _endpoint;
 
         public static ConcurrentDictionary<string, Queue<OscOutAction>> ActionsQueue = new ConcurrentDictionary<string, Queue<OscOutAction>>();
 
-        public static ConcurrentDictionary<string, OscOutAction> CurrentlyRunningActions = new ConcurrentDictionary<string, OscOutAction>();
+        public ConcurrentDictionary<string, OscOutAction> CurrentlyRunningActions = new ConcurrentDictionary<string, OscOutAction>();
 
         public static void EnqueueAction(OscOutAction action)
         {
             Logger.Debug("OsrActions", $"Add new action {action.ActionName} to queue.");
-            if (ActionsQueue.TryGetValue(action.ActionName, out Queue<OscOutAction>? queue))
+            if (ActionsQueue.TryGetValue(action.ActionName, out Queue<OscOutAction> queue))
                 queue.Enqueue(action);
             else
                 ActionsQueue.TryAdd(action.ActionName, new Queue<OscOutAction>(new[] {action}));
         }
 
-        private static void SendOcsData(string action, object obj)
+        private async Task SendOcsData(string action, object obj)
         {
-            if (obj is int integer)
-                _client?.Send(action, integer);
-            else if (obj is long lng)
-                _client?.Send(action, (int)lng);
-            else if (obj is double f)
-                _client?.Send(action, (float)f);
-            else if (obj is Vector2 vec2)
-                _client?.Send(action, vec2);
-            else if (obj is Vector3 vec3)
-                _client?.Send(action, vec3);
-            else if (obj is Color32 color)
-                _client?.Send(action, color);
-            else if (obj is bool b)
-                _client?.Send(action, b);
+            if (obj is int _int)
+                await _client.SendMessageAsync(new OscMessage(new Address(action), new object[] { _int }));
+            else if (obj is long _long)
+                await _client.SendMessageAsync(new OscMessage(new Address(action), new object[] { (int)_long }));
+            else if (obj is double _double)
+                await _client.SendMessageAsync(new OscMessage(new Address(action), new object[] { (float)_double }));
+            else if (obj is bool _bool)
+                await _client.SendMessageAsync(new OscMessage(new Address(action), new object[] { _bool }));
         }
 
-        public static void TryExecuting()
+        public async Task TryExecuting()
         {
             foreach(var action in ActionsQueue)
             {
@@ -60,7 +49,7 @@ namespace TwitchVrcAvatarOSC
 
                     if (newAction.Value != null)
                     {
-                        SendOcsData(action.Key, newAction.Value);
+                        await SendOcsData(action.Key, newAction.Value);
                         Logger.Debug("OscActions", $"On execution start send value {newAction.Value} ({newAction.Value.GetType().FullName}) for action {newAction.ActionName}");
                     }
 
@@ -76,7 +65,7 @@ namespace TwitchVrcAvatarOSC
                 {
                     if (running.Value.DefaultValue != null)
                     {
-                        SendOcsData(running.Key, running.Value.DefaultValue);
+                        await SendOcsData(running.Key, running.Value.DefaultValue);
                         Logger.Debug("OscActions", $"On execution end send default value {running.Value.DefaultValue} for action {running.Key}");
                     }
                     Logger.Debug("OscActions", $"Execution time for action {running.Key} ended.");
@@ -87,14 +76,16 @@ namespace TwitchVrcAvatarOSC
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Log("OsrClient", $"Connecting to OSR Server... ( IP: {Config.Instance.OscServerIP}, Port: {Config.Instance.OscServerPort} )", ConsoleColor.DarkMagenta);
-            _client = new OscClient(Config.Instance.OscServerIP, Config.Instance.OscServerPort);
-            Logger.Log("OsrClient", "Connected to OSR Server!", ConsoleColor.DarkMagenta);
+            _client = new UdpClient();
+            _endpoint = new IPEndPoint(IPAddress.Parse(Config.Instance.OscServerIP), Config.Instance.OscServerPort);
+            Logger.Log("OsrClient", $"Connect udp client to IP: {Config.Instance.OscServerIP}, Port: {Config.Instance.OscServerPort}.", ConsoleColor.DarkMagenta);
+            _client.Connect(_endpoint);
+
             while (true)
             {
                 try
                 {
-                    TryExecuting();
+                    await TryExecuting();
                 }
                 catch (Exception ex)
                 {
