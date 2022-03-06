@@ -10,21 +10,17 @@ Currently implemented events:
 - OnBeingHosted
 - OnFollow
 
+# Download
+
+[Link](https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/latest)
 
 
 
 # Contact
 
-If you need help or any suggestions which stuff i can add
-
-Discord: Killers0992#4552
-
-
-
+[![Discord Banner](https://discordapp.com/api/guilds/948581245527425114/widget.png?style=banner3)](https://discord.gg/uhvsaEFmSE)
 
 # Some information
-
-Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrcAvatarOSC/suites/5504784375/artifacts/176194618)
 
 - If you want easily get REWARD IDS just redeem something via points and in console check for
 
@@ -32,7 +28,7 @@ Latest working build of bot: [Download](https://github.com/Killers0992/TwitchVrc
 
 - Possible parameters for your avatar which can be used in OCS can be found in 
 
-``LocalLow/VRChat/VRChat/OCS/<userid>/<avatar-name>_<avatarid>.json``
+``LocalLow/VRChat/VRChat/OCS/<userid>/<avatarid>.json``
 
 https://docs.vrchat.com/v2022.1.1/docs/osc-avatar-parameters
 
