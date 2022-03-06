@@ -18,7 +18,7 @@ Currently implemented events:
 
 # Contact
 
-![Discord Banner](https://discordapp.com/api/guilds/948581245527425114/widget.png?style=banner3)
+[![Discord Banner](https://discordapp.com/api/guilds/948581245527425114/widget.png?style=banner3)](https://discord.gg/uhvsaEFmSE)
 
 # Some information
 
