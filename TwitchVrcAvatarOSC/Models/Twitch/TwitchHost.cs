@@ -30,7 +30,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchHost", $"User {host.HostedByChannel} hosted your channel but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Info($"TwitchHost", $"User {host.HostedByChannel} hosted your channel but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )", Color.Magenta, Color.White);
                     return false;
                 }
             }
@@ -46,7 +46,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchHost", $"User {host.HostedByChannel} hosted your channel and OSC actions added to queue!");
+            Logger.Info($"TwitchHost", $"User {host.HostedByChannel} hosted your channel and OSC actions added to queue!", Color.Magenta, Color.White);
             return true;
         }
     }

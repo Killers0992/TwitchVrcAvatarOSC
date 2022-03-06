@@ -9,6 +9,11 @@
         public static string TwitchName;
         public static string ChannelName;
 
+        public static bool IsConnectedToTwitchChat;
+        public static bool IsConnectedToTwitchPubSub;
+
+        public static bool WaitingForAction;
+
         public TwitchAPI api;
         public TwitchClient client;
         public TwitchPubSub tPubSub;
@@ -18,6 +23,13 @@
         {
             api = new TwitchAPI();
             api.Settings.ClientId = ClientID;
+
+            retry:
+
+            while (WaitingForAction)
+            {
+                await Task.Delay(1000);
+            }
 
             try
             {
@@ -31,16 +43,21 @@
                 }
                 else
                 {
-                    Logger.Error($"TwitchBot", "Returned user from oauth token not exists!");
-                    return;
+                    WaitingForAction = true;
+                    goto retry;
                 }
             }
             catch (Exception)
             {
-                Process.Start(new ProcessStartInfo("http://localhost:3000/twitch/link") { UseShellExecute = true });
-                Logger.Log("TwitchBot", "OAuth is invalid, opening browser with twitch login...");
-                Logger.Log("TwitchBot", "After login copy token from browser and paste in \"TwitchOAuth\" field in config.json");
-                return;
+                var result = MessageBox.Show("OAuth token is invalid, do you want login via twitch?", "Failed connecting to Twitch", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+                if (result == DialogResult.Yes)
+                {
+                    Process.Start(new ProcessStartInfo("http://localhost:3000/twitch/link") { UseShellExecute = true });
+                }
+
+                Logger.Info("TwitchBot", "After login copy token from browser and paste in settings tab.", Color.Magenta, Color.White);
+                WaitingForAction = true;
+                goto retry;
             }
 
             ConnectionCredentials credentials = new ConnectionCredentials(TwitchName, Config.Instance.TwitchOAuth);
@@ -56,11 +73,11 @@
 
             if (client == null)
             {
-                Logger.Error($"TwitchBot", "Client is null!", ConsoleColor.DarkMagenta);
+                Logger.Error($"TwitchBot", "Client is null!", Color.Magenta, Color.White);
                 return;
             }
 
-            Logger.Log("TwitchBot", "Starting...", ConsoleColor.DarkMagenta);
+            Logger.Info("TwitchBot", "Starting...", Color.Magenta, Color.White);
             client.Initialize(credentials, ChannelName);
 
             eventHandlers = new TwitchEventHandlers(this);

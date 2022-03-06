@@ -1,9 +1,11 @@
 ﻿namespace TwitchVrcAvatarOSC.Bot
 {
     using System;
+    using System.Drawing;
     using TwitchLib.Client.Events;
     using TwitchLib.Communication.Events;
     using TwitchLib.PubSub.Events;
+    using TwitchVrcAvatarOSC.Interface.Events;
     using TwitchVrcAvatarOSC.Models;
     using TwitchVrcAvatarOSC.Services;
 
@@ -27,7 +29,7 @@
                 }
             }
 
-            if (!e.ChatMessage.Message.StartsWith(Config.Instance.CommandPrefix))
+            if (!e.ChatMessage.Message.StartsWith(Config.Instance.Events.CommandPrefix))
                 return;
 
             string cmdName = e.ChatMessage.Message.Remove(0, 1);
@@ -35,7 +37,7 @@
             if (Config.Instance.Events.OnCommand.TryGetValue(cmdName.ToLower(), out TwitchCommand cmd))
             {
                 if (!cmd.TryExecuteCommand(e.ChatMessage))
-                    Logger.Log("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}");
+                    Logger.Info("TwitchCommand", $"User {e.ChatMessage.Username} failed to execute command {cmdName}", Color.Magenta, Color.White);
             }
         }
 
@@ -43,49 +45,57 @@
         {
             if (!Config.Instance.Events.OnReward.TryGetValue(e.RewardRedeemed.Redemption.Reward.Id, out TwitchReward rew))
             {
-                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} used reward {e.RewardRedeemed.Redemption.Reward.Id} but that reward id is not added in config!");
+                Logger.Info("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} used reward {e.RewardRedeemed.Redemption.Reward.Id} but that reward id is not added in config!", Color.Magenta, Color.White);
                 return;
             }
 
             if (rew.TryExecuteCommand(e.RewardRedeemed.Redemption))
-                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id}");
+                Logger.Info("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} executed reward {e.RewardRedeemed.Redemption.Reward.Id}", Color.Magenta, Color.White);
             else
-                Logger.Log("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Reward.Id}");
+                Logger.Info("TwitchReward", $"User {e.RewardRedeemed.Redemption.User.DisplayName} failed to execute redeem {e.RewardRedeemed.Redemption.Reward.Id}", Color.Magenta, Color.White);
         }
 
         public void OnListenResponse(object sender, TwitchLib.PubSub.Events.OnListenResponseArgs e)
         {
-            Logger.Debug("TwitchPubSub", $"Response from channel {e.ChannelId}, topic: {e.Topic}, isSuccess: {e.Successful}!", ConsoleColor.DarkMagenta);
+            Logger.Debug("TwitchPubSub", $"Response from channel {e.ChannelId}, topic: {e.Topic}, isSuccess: {e.Successful}!", Color.DarkMagenta, Color.White);
         }
 
         public void OnConnected(object sender, OnConnectedArgs e)
         {
-            Logger.Log("TwitchBot", $"Connected!", ConsoleColor.DarkMagenta);
+            TwitchBot.IsConnectedToTwitchChat = true;
+            MainPanel.OnStatusChanged(new StatusChangeArgs(false, true));
+            Logger.Info("TwitchBot", $"Connected!", Color.Magenta, Color.White);
         }
 
         public void OnPubSubServiceClosed(object sender, EventArgs e)
         {
-            Logger.Log("TwitchPubSub", "Service disconnected!", ConsoleColor.DarkMagenta);
+            TwitchBot.IsConnectedToTwitchPubSub = false;
+            MainPanel.OnStatusChanged(new StatusChangeArgs(true, false));
+            Logger.Info("TwitchPubSub", "Service disconnected!", Color.DarkMagenta, Color.White);
         }
 
         public void OnPubSubServiceError(object sender, TwitchLib.PubSub.Events.OnPubSubServiceErrorArgs e)
         {
-            Logger.Error("TwitchPubSub", e.Exception.Message, ConsoleColor.DarkMagenta);
+            Logger.Error("TwitchPubSub", e.Exception.Message, Color.DarkMagenta, Color.White);
         }
 
         public void OnClientLog(object sender, TwitchLib.Client.Events.OnLogArgs e)
         {
-            Logger.Debug("TwitchBot", e.Data, ConsoleColor.DarkMagenta);
+            Logger.Debug("TwitchBot", e.Data, Color.Magenta, Color.White);
         }
 
         public void OnDisconnected(object sender, OnDisconnectedEventArgs e)
         {
-            Logger.Log("TwitchBot", $"Disconnected!", ConsoleColor.DarkMagenta);
+            TwitchBot.IsConnectedToTwitchChat = false;
+            MainPanel.OnStatusChanged(new StatusChangeArgs(false, false));
+            Logger.Info("TwitchBot", $"Disconnected!", Color.Magenta, Color.White);
         }
 
         public void OnPubSubServiceConnected(object sender, EventArgs e)
         {
-            Logger.Log("TwitchPubSub", $"Connected!", ConsoleColor.DarkMagenta);
+            TwitchBot.IsConnectedToTwitchPubSub = true;
+            MainPanel.OnStatusChanged(new StatusChangeArgs(true, true));
+            Logger.Info("TwitchPubSub", $"Connected!", Color.DarkMagenta, Color.White);
             bot.tPubSub.SendTopics(Config.Instance.TwitchOAuth);
         }
 
@@ -98,7 +108,7 @@
 
                 if (targetSubCommand == null)
                 {
-                    Logger.Log($"TwitchReSub", $"User {e.Subscription.DisplayName} subbed for {cumulativeMonths} months but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!");
+                    Logger.Info($"TwitchReSub", $"User {e.Subscription.DisplayName} subbed for {cumulativeMonths} months but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!", Color.Magenta, Color.White);
                     return;
                 }
 
@@ -110,7 +120,7 @@
 
                 if (targetSubCommand == null)
                 {
-                    Logger.Log($"TwitchNewSub", $"User {e.Subscription.DisplayName} subbed but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!");
+                    Logger.Info($"TwitchNewSub", $"User {e.Subscription.DisplayName} subbed but sub plan {e.Subscription.SubscriptionPlan} is not configured in config!", Color.Magenta, Color.White);
                     return;
                 }
 
@@ -122,7 +132,7 @@
         {
             if (Config.Instance.Events.OnFollow == null)
             {
-                Logger.Log($"TwitchFollow", $"User {e.Username} followed channel but event OnFollow is not configured!");
+                Logger.Info($"TwitchFollow", $"User {e.Username} followed channel but event OnFollow is not configured!", Color.Magenta, Color.White);
                 return;
             }
 
@@ -135,7 +145,7 @@
 
             if (targetCommand == null)
             {
-                Logger.Log($"TwitchHost", $"User {e.BeingHostedNotification.HostedByChannel} is hosting your channel with {e.BeingHostedNotification.Viewers} viewers but any OscActions were made!");
+                Logger.Info($"TwitchHost", $"User {e.BeingHostedNotification.HostedByChannel} is hosting your channel with {e.BeingHostedNotification.Viewers} viewers but any OscActions were made!", Color.Magenta, Color.White);
                 return;
             }
 

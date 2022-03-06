@@ -1,6 +1,7 @@
 ﻿global using System;
 global using System.IO;
 global using System.Linq;
+global using System.Drawing;
 global using System.Net;
 global using System.Net.Http;
 global using System.Net.Sockets;
@@ -13,6 +14,7 @@ global using System.Collections.Concurrent;
 global using TwitchVrcAvatarOSC;
 global using TwitchVrcAvatarOSC.Bot;
 global using TwitchVrcAvatarOSC.Models;
+global using TwitchVrcAvatarOSC.Interface;
 global using TwitchVrcAvatarOSC.Services;
 global using TwitchVrcAvatarOSC.Properties;
 
@@ -31,4 +33,6 @@ global using TwitchLib.Communication.Models;
 global using TwitchLib.PubSub.Enums;
 
 global using Newtonsoft.Json;
+
+global using System.Windows.Forms;
 

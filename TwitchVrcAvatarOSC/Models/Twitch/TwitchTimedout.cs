@@ -26,7 +26,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchTimedout", $"User {username} got timedout but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Info($"TwitchTimedout", $"User {username} got timedout but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )", Color.Magenta, Color.White);
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchTimedout", $"User {username} got timedout and OSC actions added to queue!");
+            Logger.Info($"TwitchTimedout", $"User {username} got timedout and OSC actions added to queue!", Color.Magenta, Color.White);
             return true;
         }
     }

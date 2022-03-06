@@ -22,7 +22,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchBan", $"User {username} got banned but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Info($"TwitchBan", $"User {username} got banned but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )", Color.Magenta, Color.White);
                     return false;
                 }
             }
@@ -38,7 +38,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchBan", $"User {username} got banned and OSC actions added to queue!");
+            Logger.Info($"TwitchBan", $"User {username} got banned and OSC actions added to queue!", Color.Magenta, Color.White);
             return true;
         }
     }

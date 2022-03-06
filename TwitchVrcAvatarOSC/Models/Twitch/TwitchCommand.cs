@@ -34,7 +34,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Info($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )", Color.White, Color.White);
                     return false;
                 }
             }
@@ -49,7 +49,7 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                     else
                     {
-                        Logger.Log($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
+                        Logger.Info($"TwitchCommand", $"User {message.DisplayName} tried to execute command {message.Message} but command is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )", Color.White, Color.White);
                         return false;
                     }
                 }
@@ -79,7 +79,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchCommand", $"User {message.DisplayName} sended command {message.Message} and OSC actions added to queue!");
+            Logger.Info($"TwitchCommand", $"User {message.DisplayName} sended command {message.Message} and OSC actions added to queue!", Color.White, Color.White);
             return true;
         }
     }

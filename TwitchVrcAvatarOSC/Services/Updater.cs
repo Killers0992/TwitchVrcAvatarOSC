@@ -17,11 +17,11 @@ namespace TwitchVrcAvatarOSC.Services
             await Task.Delay(5000);
             while (true)
             {
-                Logger.Log("Updater", "Check if update is avaliable...");
+                Logger.Info("Updater", "Check if update is avaliable...", Color.White, Color.White);
                 var result = await _client.GetAsync(URL);
                 if (!result.IsSuccessStatusCode)
                 {
-                    Logger.Log("Updater", "Failed getting current version from website! ( network failure )");
+                    Logger.Info("Updater", "Failed getting current version from website! ( network failure )", Color.White, Color.White);
                     await Task.Delay(15000);
                     continue;
                 }
@@ -31,11 +31,10 @@ namespace TwitchVrcAvatarOSC.Services
 
                 if (versionObject.Version == null)
                 {
-                    Logger.Log("Updater", "Remote version is invalid!");
+                    Logger.Info("Updater", "Remote version is invalid!", Color.White, Color.White);
                     await Task.Delay(15000);
                     continue;
                 }
-
 
                 if (Version.TryParse(CurrentVersion.Instance.Version, out Version currentVersion))
                 {
@@ -46,29 +45,29 @@ namespace TwitchVrcAvatarOSC.Services
                             if (!received)
                             {
                                 received = true;
-                                Logger.Log("Updater", $"New version \"{versionObject.Version}\" is avaliable!");
+                                Logger.Info("Updater", $"New version \"{versionObject.Version}\" is avaliable!", Color.White, Color.White);
                                 if (versionObject.Changelog.Length > 0)
                                 {
-                                    Logger.Log("Updater", $"Changelogs:");
+                                    Logger.Info("Updater", $"Changelogs:", Color.White, Color.White);
                                     foreach (var change in versionObject.Changelog)
                                     {
-                                        Logger.Log("Updater", $" - {change}");
+                                        Logger.Info("Updater", $" - {change}", Color.White, Color.White);
                                     }
                                 }
                             }
 
-                            Logger.Log("Updater", $"Application will be updated in 5 seconds.");
+                            Logger.Info("Updater", $"Application will be updated in 5 seconds.", Color.White, Color.White);
                             await Task.Delay(5000);
                             var time = new Stopwatch();
                             time.Start();
-                            Logger.Log("Updater", $"Start downloading file...");
+                            Logger.Info("Updater", $"Start downloading file...", Color.White, Color.White);
                             result = await _client.GetAsync($"https://github.com/Killers0992/TwitchVrcAvatarOSC/releases/download/{versionObject.Version}/TwitchBot.zip");
                             if (result.IsSuccessStatusCode)
                             {
                                 var bytes = await result.Content.ReadAsByteArrayAsync();
                                 File.WriteAllBytes("./TwitchBot.zip", bytes);
                                 time.Stop();
-                                Logger.Log("Updater", $"Downloaded file in {(int)time.Elapsed.TotalSeconds} seconds!");
+                                Logger.Info("Updater", $"Downloaded file in {(int)time.Elapsed.TotalSeconds} seconds!", Color.White, Color.White);
                                 string currentPath = Path.Combine(AppContext.BaseDirectory, $"TwitchVrcAvatarOSC.exe");
                                 string archivePath = Path.Combine(AppContext.BaseDirectory, $"old_TwitchVrcAvatarOSC.exe");
                                 File.Move(currentPath, archivePath);
@@ -89,14 +88,14 @@ namespace TwitchVrcAvatarOSC.Services
                             else
                             {
                                 time = null;
-                                Logger.Log("Updater", $"Remote file for version \"{versionObject.Version}\" is invalid!");
+                                Logger.Info("Updater", $"Remote file for version \"{versionObject.Version}\" is invalid!", Color.White, Color.White);
                                 await Task.Delay(15000);
                                 continue;
                             }
                         }
                         else
                         {
-                            Logger.Log("Updater", "No updates avaliable.");
+                            Logger.Info("Updater", "No updates avaliable.", Color.White, Color.White);
                         }
                     }
                 }

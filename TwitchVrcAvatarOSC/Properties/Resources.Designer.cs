@@ -63,6 +63,16 @@ namespace TwitchVrcAvatarOSC.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        public static byte[] exchangerates {
+            get {
+                object obj = ResourceManager.GetObject("exchangerates", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         public static byte[] version {
             get {
                 object obj = ResourceManager.GetObject("version", resourceCulture);

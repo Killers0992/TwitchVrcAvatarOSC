@@ -1,19 +1,11 @@
-﻿using Newtonsoft.Json;
-using TwitchLib.Client.Models;
-using TwitchVrcAvatarOSC.Bot;
+﻿using System.Drawing;
 
-namespace TwitchVrcAvatarOSC.Models
+namespace TwitchVrcAvatarOSC.Models.StreamLabs
 {
-    public class TwitchBits
+    public class StreamLabsDonation
     {
-        public int MinBits { get; set; } = 100;
-        public int MaxBits { get; set; } = 1000;
-
-        public bool NormalAccess { get; set; } = true;
-        public bool SubAccess { get; set; }
-        public int SubMonths { get; set; }
-        public bool ModAccess { get; set; }
-        public bool VipAccess { get; set; }
+        public int MinAmount { get; set; } = 0;
+        public int MaxAmount { get; set; } = 1000;
 
         public TimeSpan GlobalDelay { get; set; } = TimeSpan.Zero;
 
@@ -56,17 +48,6 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                 }
                 CurrentUserDelays.Add(message.UserId, DateTime.Now.Add(DelayPerUser));
-            }
-
-            if (!NormalAccess)
-            {
-                if (message.SubscribedMonthCount < SubMonths) return false;
-                if (SubAccess)
-                {
-                    if (!message.IsSubscriber) return false;
-                }
-                if (ModAccess && !message.IsModerator) return false;
-                if (VipAccess && !message.IsVip) return false;
             }
 
             if (ExecuteRandomAction && OscOutActions.Count > 1)

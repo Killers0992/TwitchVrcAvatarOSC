@@ -22,7 +22,7 @@ namespace TwitchVrcAvatarOSC.Models
                     CurrentGlobalDelay = DateTime.Now.Add(GlobalDelay);
                 else
                 {
-                    Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )");
+                    Logger.Info($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(CurrentGlobalDelay - DateTime.Now).TotalSeconds} seconds )", Color.Magenta, Color.White);
                     return false;
                 }
             }
@@ -37,7 +37,7 @@ namespace TwitchVrcAvatarOSC.Models
                     }
                     else
                     {
-                        Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )");
+                        Logger.Info($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} but action is on cooldown! ( Cooldown ends in {(int)(delay - DateTime.Now).TotalSeconds} seconds )", Color.Magenta, Color.White);
                         return false;
                     }
                 }
@@ -55,7 +55,7 @@ namespace TwitchVrcAvatarOSC.Models
                     OscActions.EnqueueAction(action);
             }
 
-            Logger.Log($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} and OSC actions added to queue!");
+            Logger.Info($"TwitchReward", $"User {message.User.DisplayName} redeemed reward {message.Reward.Id} and OSC actions added to queue!", Color.Magenta, Color.White);
             return true;
         }
     }

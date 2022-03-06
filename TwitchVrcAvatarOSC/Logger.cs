@@ -1,36 +1,22 @@
-﻿namespace TwitchVrcAvatarOSC
+﻿using System.Drawing;
+using TwitchVrcAvatarOSC.Enums;
+
+namespace TwitchVrcAvatarOSC
 {
     public class Logger
     {
-        public static void Log(string type, string message, ConsoleColor color = ConsoleColor.Green) => RawMessage("LOG", ConsoleColor.Cyan, type, color, message);
-        public static void Error(string type, string message, ConsoleColor color = ConsoleColor.Green) => RawMessage("ERROR", ConsoleColor.DarkRed, type, color, message);
-        public static void Warn(string type, string message, ConsoleColor color = ConsoleColor.Green) => RawMessage("WARN", ConsoleColor.DarkYellow, type, color, message);
-        public static void Debug(string type, string message, ConsoleColor color = ConsoleColor.Green)
+        public static void Info(string tag, string message, Color tagColor, Color messageColor) => RawMessage(LogType.Info, tagColor, tag, messageColor, message);
+        public static void Error(string tag, string message, Color tagColor, Color messageColor) => RawMessage(LogType.Error, tagColor, tag, messageColor, message);
+        public static void Warn(string tag, string message, Color tagColor, Color messageColor) => RawMessage(LogType.Warn, tagColor, tag, messageColor, message);
+        public static void Debug(string tag, string message, Color tagColor, Color messageColor)
         {
             if (!Config.Instance.Debug) return;
-            RawMessage("DEBUG", ConsoleColor.Green, type, color, message);
+            RawMessage(LogType.Debug, tagColor, tag, messageColor, message);
         }
 
-        static void RawMessage(string tag, ConsoleColor tagcolor, string type, ConsoleColor typecolor, string message)
+        static void RawMessage(LogType logType, Color tagcolor, string tag, Color messageColor, string message)
         {
-            var defaultColor = Console.ForegroundColor;
-            Console.Write(" [");
-            Console.ForegroundColor = ConsoleColor.DarkGray;
-            Console.Write(DateTime.Now.ToString("T"));
-            Console.ForegroundColor = defaultColor;
-            Console.Write("] ");
-            Console.Write("[");
-            Console.ForegroundColor = tagcolor;
-            Console.Write(tag);
-            Console.ForegroundColor = defaultColor;
-            Console.Write("]");
-            Console.Write($" [");
-            Console.ForegroundColor = typecolor;
-            Console.Write(type);
-            Console.ForegroundColor = defaultColor;
-            Console.Write($"] ");
-            Console.Write(message);
-            Console.WriteLine();
+            MainPanel.OnReceiveLog(new Interface.Events.ConsoleLogArgs(DateTime.Now, logType, tagcolor, tag, messageColor, message));
         }
     }
 }
