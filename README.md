@@ -1,3 +1,5 @@
+[![Github All Releases](https://img.shields.io/github/downloads/Killers0992/TwitchVrcAvatarOSC/total.svg)]()
+
 # TwitchVrcAvatarOSC
 Twitch bot which allows you to manipulate vrchat avatar thru OSC.
 
